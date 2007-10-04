@@ -68,7 +68,7 @@ usage(int fail)
     char iob[1024];
 
     setbuffer(stderr, iob, sizeof iob);
-    fprintf(stderr, "usage: %s [-uV] [+format]\n", pgm);
+    fprintf(stderr, "usage: %s [-hIuV] [+format]\n", pgm);
     fprintf(stderr, "       %s mmddhhmm[cc]yy[.ss]\n", pgm);
     showopts(stderr, nropts, opts);
     setbuf(stderr, NULL);
