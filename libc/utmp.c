@@ -37,7 +37,7 @@ setutent()
     char *file = ut_file ? ut_file : UTMP_FILE;
 
     if (ut_fd == -1) {
-	ut_dbz = (ut_fd = dbminit(file)) != -1;
+	ut_dbz = (ut_fd = dbzinit(file)) != -1;
 
 	if (!ut_dbz)
 	    if ( (ut_fd = open(file, O_RDWR, 0644)) == -1)
@@ -56,7 +56,7 @@ endutent()
 
     if (ut_dbz) {
 	ut_dbz = 0;
-	dbmclose();
+	dbzclose();
     }
     else
 	close(ut_fd);
@@ -119,13 +119,13 @@ getutline(struct utmp *line)
     if (ut_fd == -1 || lseek(ut_fd, ut_pos, SEEK_SET) != ut_pos) return 0;
 
     if (ut_dbz) {
-	datum key, data;
+	dbzdatum key, data;
 	long data_pos;
 
 	key.dsize = strlen(line->ut_line);
 	key.dptr  = line->ut_line;
 
-	data = fetch(key);
+	data = dbzfetch(key);
 
 	if ( data.dsize == sizeof data_pos ) {
 	    memcpy(&data_pos, data.dptr, data.dsize);
@@ -153,13 +153,13 @@ setutline(struct utmp *line)
     if (ut_fd == -1 || lseek(ut_fd, ut_pos, SEEK_SET) != ut_pos) return;
 
     if (ut_dbz) {
-	datum key, data;
+	dbzdatum key, data;
 	long data_pos;
 
 	key.dsize = strlen(line->ut_line);
 	key.dptr = line->ut_line;
 
-	data = fetch(key);
+	data = dbzfetch(key);
 
 	if ( data.dsize == sizeof data_pos ) /* update existing entry */ {
 	    memcpy(&data_pos, data.dptr, data.dsize);
@@ -172,7 +172,7 @@ setutline(struct utmp *line)
 
 	    /* keep writers from stepping on each other */
 	    if (flock(ut_fd, LOCK_EX) == 0) {
-		store(key,data);
+		dbzstore(key,data);
 		flock(ut_fd, LOCK_UN);
 	    }
 	}

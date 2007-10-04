@@ -2,8 +2,8 @@
 
 typedef struct {
 	char	*dptr;
-	int		dsize;
-} datum;
+	int	dsize;
+} dbzdatum;
 
-extern datum	fetch();
-extern int	dbminit(), dbmclose(), store();
+extern dbzdatum	dbzfetch();
+extern int	dbzdbminit(), dbzdbmclose(), dbzstore();

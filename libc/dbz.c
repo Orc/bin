@@ -95,7 +95,7 @@ static long *core_index = (long *) 0;
 #endif
 
 int 
-dbminit(name)
+dbzinit(name)
 char *name;
 {
 	char *index_file;	/* index file name */
@@ -104,7 +104,7 @@ char *name;
 #endif
 
 	if (Index_fd >= 0) {
-		DEBUG("dbminit: dbminit aready called once\n");
+		DEBUG("dbzinit: dbzinit aready called once\n");
 		return(-1);    /* init already called once */
 	}
 
@@ -122,7 +122,7 @@ char *name;
 	if ((Index_fd = open(index_file, O_RDWR)) < 0 &&
 	    (Index_fd = open(index_file, O_RDONLY)) < 0)
 	{
-		DEBUG("dbminit: Index_file open failed\n");
+		DEBUG("dbzinit: Index_file open failed\n");
 		return(-1);
 	}
 
@@ -132,7 +132,7 @@ char *name;
 	if (core_index != (long *) NULL) {
 		if( read(Index_fd, (char *) core_index, nbytes)
 		 == -1) {
-			DEBUG("dbminit: read failed\n");
+			DEBUG("dbzinit: read failed\n");
 			return(-1);
 		}
 	}
@@ -146,7 +146,7 @@ char *name;
 
 		if (close(creat(name, 0644)) < 0 ||
 		    (Data_fd = open(name, O_RDONLY)) < 0) {
-			DEBUG("dbminit: Data_file open failed\n");
+			DEBUG("dbzinit: Data_file open failed\n");
 			(void) close(Index_fd);
 			free(index_file);
 			Index_fd = -1;
@@ -156,12 +156,12 @@ char *name;
 
 	crcinit();	/* initialize the crc table */
 	free(index_file);
-	DEBUG("dbminit: succeeded\n");
+	DEBUG("dbzinit: succeeded\n");
 	return Data_fd;
 }
 
 int
-dbmclose()
+dbzclose()
 {
 	int err = 0;
 	
@@ -182,21 +182,21 @@ dbmclose()
 		Index_fd = -1;
 		err += close(Data_fd);
 	}
-	DEBUG("dbmclose: %s\n", err == 0 ? "succeeded" : "failed");
+	DEBUG("dbzclose: %s\n", err == 0 ? "succeeded" : "failed");
 	return (err == 0 ? 0 : -1);
 }
 
 /* get an entry from the database */
 
-datum
-fetch(key)
-datum key;
+dbzdatum
+dbzfetch(key)
+dbzdatum key;
 {
 	register long index_ptr;
 	long index_size = INDEX_SIZE;
         char buffer[BLKSIZE + 1];
 	static long data_ptr;
-	datum output;
+	dbzdatum output;
 	int keysize;
 
 	DEBUG("fetch: (%s)\n", key.dptr);
@@ -255,9 +255,9 @@ datum key;
 }
 
 /* add an entry to the database */
-store(key, data)
-datum key;
-datum data;
+dbzstore(key, data)
+dbzdatum key;
+dbzdatum data;
 {
 	/* lint complains about a possible pointer alignment problem here */
 	/* it is not a problem because dptr is the first element of a */
