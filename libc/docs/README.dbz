@@ -1,0 +1,14 @@
+From: zeeff@b-tech.ann-arbor.mi.us (Jon Zeeff)
+Newsgroups: news.software.b
+Subject: latest dbz
+Message-ID: <1989Nov12.013643.1358@b-tech.ann-arbor.mi.us>
+Date: 12 Nov 89 01:36:43 GMT
+Reply-To: zeeff@b-tech.ann-arbor.mi.us (Jon Zeeff)
+Organization: Branch Technology Ann Arbor, MI
+
+Here is the latest dbz.  It's faster and produces smaller files than dbm.
+The INCORE speedups by Mark Moraes seem to make a big difference for
+expire.  C News users need this version to handle the rfc822ized message
+ids.  If you don't mind waiting, I expect that Henry Spencer will release
+a version with additional improvements.  
+
