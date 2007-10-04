@@ -44,11 +44,11 @@
 .Nd display or set date and time
 .Sh SYNOPSIS
 .Nm
-.Op Fl auV
+.Op Fl huIV
 .Op Cm + Ns Ar format
 .Nm
 .Op Fl u
-.Ar [cc]yymmddhhmm[.ss]
+.Ar mmddhhmm[cc]yy[.ss]
 .Sh DESCRIPTION
 .Nm
 displays the current date and time when invoked without arguments.
@@ -57,9 +57,11 @@ way or set the date.  Only the superuser may set the date.
 .Pp
 The options are as follows:
 .Bl -tag -width Ds
-.It Fl a
+.It Fl h
+Print a usage message, then exit.
+.It Fl I
 Display the Information Superhighway time  (It's always September
-on the Information Superhighway.)
+on the Information Superhighway, and has been since 1993.)
 .It Fl u
 Display or set the date in
 .Tn UTC

@@ -10,13 +10,14 @@
 #include <sys/time.h>
 #include <ctype.h>
 #include <stdlib.h>
-#include <libgen.h>
+#include <unistd.h>
 #include <basis/options.h>
 #include <string.h>
 
 struct x_option opts[] = {
-    { 'a', 'a', "aol", 0, "display information-superhighway time" },
+    { 'I', 'I', "psu", 0, "display information-superhighway time" },
     { 'u', 'u', "utc", 0, "display the UTC date" },
+    { 'h', 'h', "help", 0, "print this help message" },
     { 'V', 'V', "version", 0, "display the version#" },
 };
 #define nropts	(sizeof opts / sizeof opts[0])
@@ -62,12 +63,16 @@ printdf(char *format, struct tm *t)
 }
 
 void
-usage()
+usage(int fail)
 {
+    char iob[1024];
+
+    setbuffer(stderr, iob, sizeof iob);
     fprintf(stderr, "usage: %s [-uV] [+format]\n", pgm);
-    fprintf(stderr, "       %s +CCYYMMDDHHMM.SS\n", pgm);
+    fprintf(stderr, "       %s mmddhhmm[cc]yy[.ss]\n", pgm);
     showopts(stderr, nropts, opts);
-    exit(1);
+    setbuf(stderr, NULL);
+    exit(fail ? 1 : 0);
 }
 
 int
@@ -92,7 +97,7 @@ NUM(char **p, int size)
 }
 
 
-void
+int
 setdate(char *date, struct tm *current)
 {
     char *sec;
@@ -104,28 +109,28 @@ setdate(char *date, struct tm *current)
 	*sec++ = 0;
 
 
-    /* validate date:  either 10 (YYMMDDHHMM) or 12 (CCYYMMDDHHMM) bytes,
+    /* validate date:  either 10 (MMDDHHMMYY) or 12 (MMDDHHMMCCYY) bytes,
      * plus, optionally, 3 bytes for seconds (.SS)
      */
 
     datelen = strlen(date);
     if ( (datelen != 10 && datelen != 12) || !isdigits(date) )
-	usage();
+	usage(1);
     
     if ( sec && (strlen(sec) != 3 || *sec != '.' || !isdigits(1+sec)) )
-	usage();
+	usage(1);
 
     toset = *current;
+
+    toset.tm_mon  = NUM(&date,2)-1;
+    toset.tm_mday = NUM(&date,2);
+    toset.tm_hour = NUM(&date,2);
+    toset.tm_min  = NUM(&date,2);
 
     if (datelen == 12)
 	toset.tm_year = NUM(&date,4) - 1900;
     else
 	toset.tm_year = NUM(&date,2) + (100 * (current->tm_year/100));
-
-    toset.tm_mon  = NUM(&date,2);
-    toset.tm_mday = NUM(&date,2);
-    toset.tm_hour = NUM(&date,2);
-    toset.tm_min  = NUM(&date,2);
 
     if (sec) {
 	++sec;
@@ -138,14 +143,14 @@ setdate(char *date, struct tm *current)
 
     if (getuid() != 0) {
 	fprintf(stderr, "%s: you need to be root to set the clock\n", pgm);
-	exit(1);
+	return 1;
     }
     else if (settimeofday(&tv, 0) == -1) {
 	fprintf(stderr, "%s: ", pgm);
 	perror("settimeofday");
-	exit(1);
+	return 1;
     }
-    exit(0);
+    return 0;
 }
 
 
@@ -153,7 +158,7 @@ main(argc,argv)
 char **argv;
 {
     time_t now;
-    int opt;
+    int rc = 0, opt;
     char *argfmt = 0;
     struct tm *current;
 
@@ -163,10 +168,11 @@ char **argv;
 
     while ( (opt = x_getopt(argc, argv, nropts, opts)) != EOF ) {
 	switch (opt) {
-	case 'a': aol++; break;
+	case 'I': aol++; break;
 	case 'u': utc++; break;
 	case 'V': fprintf(stderr, "%s %s\n", pgm, version); exit(0);
-	default : usage();
+	case 'h':
+	default : usage(opt != 'h');
 	}
     }
 
@@ -188,9 +194,7 @@ char **argv;
 	exit(1);
     }
     
-    if (argc < 1)
-	printdf(argfmt, current);
-    else
-	setdate(argv[0], current);
-    exit(0);
+    if (argc) rc = setdate(argv[0], current);
+    printdf(argfmt, current);
+    exit(rc);
 }
