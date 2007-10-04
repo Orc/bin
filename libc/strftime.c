@@ -158,7 +158,10 @@ weekofyear(const struct tm *time, int kind)
 					: (time->tm_wday + 6);
     }
 
-    weeks = ( 6 + time->tm_yday - days )/ 7;
+
+    weeks = ( 6 + time->tm_yday - time->tm_wday )/ 7;
+
+    if (weeks && (days > time->tm_yday % 7)) --weeks;
 
     return weeks ? weeks : 53/*we're the stub of the last year*/;
 }
