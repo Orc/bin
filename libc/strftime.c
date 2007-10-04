@@ -223,8 +223,13 @@ expand(struct context *ctx, char control)
     case 'y':   fill(ctx,"%02d", ctx->t->tm_year % 100); break;
     case 'Z':   fills(ctx,tzname[ctx->t->tm_isdst ? 1 : 0]); break;
     case 'z':   {   int plus, tz;
-		    plus = (timezone>=0 && timezone < (12*60)) ? '+' : '-';
-		    tz = (timezone/60) % (12*60);
+    #if _LINUX_C_LIB_VERSION_MAJOR == 4
+		    tz = timezone / 60;
+    #else
+		    tz = ctx->t->tm_gmtoff / 60;
+    #endif
+		    plus = ( tz>=0 ) ? '+' : '-';
+		    tz %= (12*60);
 		    fill(ctx,"%c%02d%02d", plus, abs(tz/60), abs(tz%60));
 		}
 		break;

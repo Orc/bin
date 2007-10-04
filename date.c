@@ -11,7 +11,7 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <basis/options.h>
+#include "basis/options.h"
 #include <string.h>
 
 struct x_option opts[] = {
