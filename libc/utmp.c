@@ -4,6 +4,7 @@
 
 #include <unistd.h>
 #include <string.h>
+#include <sys/file.h>
 
 #include "utmp.h"
 #include "dbz.h"
@@ -49,8 +50,10 @@ endutent()
 {
     if (ut_fd == -1) return;
 
-    if (ut_dbz)
+    if (ut_dbz) {
+	ut_dbz = 0;
 	dbmclose();
+    }
     else
 	close(ut_fd);
 
@@ -163,7 +166,11 @@ setutline(struct utmp *line)
 	    data.dsize = sizeof *line;
 	    data.dptr = (char*) line;
 
-	    store(key,data);
+	    /* keep writers from stepping on each other */
+	    if (flock(ut_fd, LOCK_EX) == 0) {
+		store(key,data);
+		flock(ut_fd, LOCK_UN);
+	    }
 	}
     }
     else {
