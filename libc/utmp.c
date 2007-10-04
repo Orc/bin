@@ -30,14 +30,18 @@ utmpname(const char *file)
 
 
 /* (open the utmp file and) position to start of file
+ */
 void
-setutmp()
+setutent()
 {
-    if (ut_fd != -1) {
-	ut_dbz = (ut_fd = dbminit(ut_file ? ut_file : UTMP_FILE)) != -1;
+    char *file = ut_file ? ut_file : UTMP_FILE;
+
+    if (ut_fd == -1) {
+	ut_dbz = (ut_fd = dbminit(file)) != -1;
 
 	if (!ut_dbz)
-	    ut_fd = open(ut_file ? ut_file : UTMP_FILE);
+	    if ( (ut_fd = open(file, O_RDWR, 0644)) == -1)
+		ut_fd = open(file, O_RDONLY, 0644);
     }
     ut_pos = 0;
 }

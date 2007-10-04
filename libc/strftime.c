@@ -223,7 +223,7 @@ expand(struct context *ctx, char control)
     case 'y':   fill(ctx,"%02d", ctx->t->tm_year % 100); break;
     case 'Z':   fills(ctx,tzname[ctx->t->tm_isdst ? 1 : 0]); break;
     case 'z':   {   int plus, tz;
-    #if _LINUX_C_LIB_VERSION_MAJOR == 4
+    #if (_LINUX_C_LIB_VERSION_MAJOR == 4) || (_LINUX_C_LIB_VERSION_MAJOR == 5)
 		    tz = timezone / 60;
     #else
 		    tz = ctx->t->tm_gmtoff / 60;

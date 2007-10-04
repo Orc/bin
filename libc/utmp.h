@@ -29,6 +29,7 @@ struct utmp {
     char   ut_line[12];		/* device name -"/dev" */
     char   ut_id[2];		/* init id or abbreviated device name */
     time_t ut_time;		/* when this record was last modified */
+    char   ut_user[8];		/* username */
     char   ut_host[16];		/* remote host name */
     long   ut_addr;		/* remote IP address */
 };
