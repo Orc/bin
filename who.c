@@ -48,10 +48,11 @@ printutmp(struct utmp *ut)
     struct tm *tm;
     int gotstats = 0;
 
-    printf("%-*.*s ", sizeof ut->ut_user, sizeof ut->ut_user, ut->ut_user);
-
-    if (quick)
+    if (quick) {
+	printf("%.*s ", sizeof ut->ut_user, ut->ut_user);
 	return;
+    }
+    printf("%-*.*s ", sizeof ut->ut_user, sizeof ut->ut_user, ut->ut_user);
 
     if (mesg||activity) {
 	char fulldevpath[5+sizeof ut->ut_line + 1];
@@ -133,7 +134,10 @@ who()
 	    printutmp(ut);
 	    count++;
 	}
-    if (quick) printf("\n# users = %d\n", count);
+    if (quick) {
+	if (!terse) printf("\n# users = %d", count);
+	putchar('\n');
+    }
     endutent();
     exit(0);
 }
@@ -154,6 +158,11 @@ char **argv;
 	whoami();
 	exit(0);
     }
+    else if ( SAME(pgm, "users") ) {
+	terse=quick=1;
+	who();
+	exit(1);
+    }
 
     while ( (opt=getopt(argc,argv, "HmqsTu")) != EOF ) {
 	switch (opt) {
@@ -170,11 +179,15 @@ char **argv;
     argc -= optind;
     argv += optind;
 
-    if ( (argc == 2) && SAME(argv[0], "am") && SAME(argv[1], "I") )
+    if ( (argc >= 2) && SAME(argv[0], "am") && SAME(argv[1], "I") ) {
 	mememe = 1;
-    else if ( argc == 1 )
+	argc -= 2;
+	argv += 2;
+    }
+
+    if ( argc == 1 )
 	utmpname(argv[0]);
-    else if ( argc > 0 )
+    else if ( argc > 1 )
 	usage();
 
     time(&now);
