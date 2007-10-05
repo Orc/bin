@@ -27,8 +27,8 @@ Also:
 .Bl -item -offset indent
 .It
 .Nm
-.Ar file 1
-.Ar file 2
+.Ar file1
+.Ar file2
 .Ar \&>file3
 .El
 .Pp
@@ -56,13 +56,13 @@ if a file cannot be found a message is written to
 .Nm
 .Ar x
 .Ar y
-.Ar \>&x
+.Ar \&>x
 .Dc
 and
 .Do
 .Nm
 .Ar x
 .Ar y
-.Ar \>&y
+.Ar \&>y
 .Dc
 cause strange results.
