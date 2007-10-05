@@ -1,0 +1,112 @@
+.Dd October 4, 2007
+.Dt UTMP 3
+.Os Mastodon
+.Sh NAME
+.Nm "getutent, getutid, getutline, pututline, setutent, endutent, utmpname"
+.Nd access utmp file entries
+.Sh LIBRARY
+.Lb libc
+.Sh SYNOPSIS
+.In utmp.h
+.Fn "struct utmp *getutent" "void"
+.Pp
+.Fn "struct utmp *getutid" "struct utmp *"
+.Fn "struct utmp *getutline" "struct utmp *"
+.Pp
+.Fn "void pututline" "struct utmp *"
+.Pp
+.Fn "void setutent" "void"
+.Fn "void endutent" "void"
+.Pp
+.Fn "void utmpname" "const char *"
+.Sh DESCRIPTION
+.Fn utmpname
+sets the name of the
+.Xr utmp 5 Ns -format
+file for the other utmp functions to access.
+If
+.Fn utmpname 
+is not used to set the filename, they
+assume 
+.Ar _PATH_UTMP
+(defined in
+.Pa \&<paths.h\&> . Ns )
+.Pp
+.Fn setutent
+rewinds the file pointer to the beginning of the utmp file.
+You
+.Ar must
+call 
+.Fn setutent
+before you call any functions other than
+.Xr utmpfile 3 .
+.Pp
+.Fn endutent
+closes the utmp file.  The utmp file may not be a flat file,
+so this function should be done when the user code is done
+accessing the file with the 
+.Xr utmp 3
+functions.
+.Pp
+.Fn getutent
+reads the next entry from the utmp file.   It returns a
+pointer to a statically allocated structure containing
+the utmp entry.
+.Pp
+.Fn
+getutid
+searches forward from the current position in the utmp file 
+based upon
+.Ar ut .
+If 
+.Ar ut-\&>ut_type 
+is 
+.Ar RUN_LVL ,
+.Ar BOOT_TIME ,
+.Ar NEW_TIME ,
+or
+.Ar OLD_TIME ,
+.Fn getutid
+will find the first entry whose ut_type field
+matches
+.Ar ut-\&>ut_type .
+If 
+.Ar ut-\&>ut_type is
+.Ar INIT_PROCESS ,
+.Ar LOGIN_PROCESS ,
+.Ar USER_PROCESS ,
+or 
+.Ar DEAD_PROCESS ,
+.Fn getutid
+will find the first entry whose ut_id field
+matches
+.Ar ut-\&>ut_id .
+.Pp
+.Fn getutline
+finds the next record whose
+.Ar ut_line
+field matches
+.Ar ut-\&>ut_line .
+If the utmp file is a flat file,
+.Fn getutline
+will search forward from the current position in the file.
+.Pp
+.Fn pututline
+writes the utmp structure
+.Ar ut
+into the utmp file.
+If it can find a record containing a
+.Ar ut_line
+that matches
+.Ar ut-\&>ut_line 
+it will update that record, otherwise it will add a new
+record to the file.
+.Sh RETURN VALUE
+.Fn getutent ,
+.Fn getutid ,
+and
+.Fn getutline
+return a pointer to a 
+.Ar "struct utmp" ,
+which is defined in 
+.Pa \&<utmp.h\&>
