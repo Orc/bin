@@ -1,0 +1,92 @@
+.Dd October 4, 2007
+.Dt UTMP 5
+.Os Mastodon
+.Sh NAME
+.Nm "utmp, wtmp" 
+.Nd login records 
+.Sh SYNOPSIS
+.Nm "#include \&<utmp.h\&>"
+.Sh DESCRIPTION
+The
+.Nm utmp
+file contains information about who is currently using the
+system.   The file is a sequence of entries in the following
+format:
+.Bd -literal -indent
+struct utmp {
+    short  ut_type;	/* type of record (see below) */
+    pid_t  ut_pid;	/* pid of process associated with this entry */
+    char   ut_line[12];	/* device name of tty, modulo leading /dev/ */
+    char   ut_id[2];	/* init id, if applicable */
+    time_t ut_time;	/* when this record was written */
+    char   ut_user[8];	/* user name (not null terminated!) */
+    char   ut_host[16];	/* first 16 bytes of host for remote login */
+    long   ut_addr;	/* ipv4 network address for remote login */
+};
+
+#define RUN_LVL		1
+#define BOOT_TIME	2
+#define NEW_TIME	3
+#define OLD_TIME	4
+#define INIT_PROCESS	5
+#define LOGIN_PROCESS	6
+#define USER_PROCESS	7
+#define DEAD_PROCESS	8
+.Ed
+.Pp
+This structure gives the name of the special file associated with the
+user's terminal, the user's login name and time of login (in
+.Xr time 2
+format.)   String fields will be null terminated if they are shorter
+that the length of the field.
+.Pp
+The 
+.Pa wtmp
+file records all logins, logouts, time setting, runlevel changes, and reboots.
+It is exactly like
+.Pa
+except that a
+.Ar USER_PROCESS
+entry with a null username indicateds a logout on the associated terminal.
+Furthermore, the terminal name
+.Dq ~
+with user name 
+.Dq shutdown
+or
+.Dq reboot
+indicates a system shutdown or reboot.
+.Pp
+.Nm Wtmp
+is written to by
+.Xr login 1 ,
+and
+.Xr init 1 ,
+some versions of 
+.Xr getty 1 ,
+and
+.Xr date 1 .
+None of these programs creates the
+.Nm wtmp
+file, so if it is removed record-keeping is turned off.
+.Sh FILES
+.Pa /var/log/utmp
+.br
+.Pa /var/log/wtmp
+.Sh SEE ALSO
+.Xr date 1 ,
+.Xr last 1 ,
+.Xr login 1 ,
+.Xr who 1 ,
+.Xr endutent 3 ,
+.Xr getutent 3 ,
+.Xr getutid 3 ,
+.Xr getutline 3 ,
+.Xr setutent 3 ,
+.Xr setutline 3 ,
+.Xr utmpfile 3 .
+.Sh BUGS
+The
+.Ar ut_host
+and
+.Ar ut_addr
+fields are too small to accurately record remote logins.
