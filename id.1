@@ -1,0 +1,77 @@
+.Dd October 5, 2007
+.Os Mastodon
+.Dt ID 1
+.Sh NAME
+.Nm id
+.Nd print uid,gid,supplemental groups
+.br
+.Nm groups
+.Nd print supplemental groups
+.Sh SYNOPSIS
+.Nm 
+.br
+.Nm id
+.Op Fl rgGSnuvh
+.\" .Op Fl -real-id
+.\" .Op Fl -group
+.\" .Op Fl -supplemental
+.\" .Op Fl -standard
+.\" .Op Fl -names
+.\" .Op Fl -user-id
+.\" .Op Fl -help
+.Op Ar user
+.Sh DESCRIPTION
+.Nm Groups
+displays the supplemental groups list for the effective user.
+.Pp
+.Nm Id
+displays the effective user id, name, group, and supplemental group.
+By default, it prints the user\-id, the user name, the group\-id,
+the group name, and all the supplemental group\-ids and names.
+You may restrict the output by specifying various options:
+.Pp
+.Bl -tag -width \-\-supplemental
+.It Fl r , Fl -real-id
+Show the real id, not the effective id.
+.It Fl g , Fl -group
+Show the group.
+.It Fl G , Fl -supplemental
+Show additional groups (in
+.Pa /etc/group )
+that this user belongs to.
+.It Fl S , Fl -standard
+Use the standard output format for
+.Nm id
+without options:
+.br
+what=id(name)
+.It Fl n , Fl -names
+Show the user and group names, not the ids.
+.It Fl u , Fl -user-id
+Show the user id.
+.IT Fl h , Fl -help
+Show a short help message, then exit.
+.El
+.Sh EXAMPLES
+.Nm id 
+.Fl ugGS
+is exactly the same as
+.Nm id
+without options.
+.Pp
+To only print the group and supplemental groups
+.Nm id
+Fl gG .
+.Sh AUTHOR
+.Xr "David Parsons" "orc@pell.chi.il.us"
+.Sh BUGS
+When
+.Nm id
+show supplemental groups, it does not attempt to sort or make them
+unique, thus if you belong to group
+.Pa wheel
+locally and you also belong to group
+.Pa wheel
+via
+.Em "yellow pages" ,
+this group will show up twice in the supplemental groups listing.
