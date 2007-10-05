@@ -1,0 +1,68 @@
+.\" The version3 manpage for cat(1), transcribed and re-formatted to use
+.\" BSD-style formatting.
+.Dd January 15, 1973
+.Dt CAT 1
+.Os
+.Sh NAME
+.Nm cat
+.Nd concatenate and print
+.Sh SYNOPSIS
+.Nm
+.Ar file ...
+.Sh DESCRIPTION
+.Nm
+reads each file in sequence
+and writes it on the standard output.
+Thus:
+.Pp
+.Bl -item -offset indent
+.It
+.Nm
+.Ar file
+.El
+.Pp
+is about the easiest way to print a file.
+Also:
+.Pp
+.Bl -item -offset indent
+.It
+.Nm
+.Ar file 1
+.Ar file 2
+.Ar \&>file3
+.El
+.Pp
+is about the easiest way to concatenate
+files.
+.Pp
+If no input file is given
+.Nm
+reads from the standard
+input file.
+.Pp
+If the argument
+.Dq -
+is encountered, cat reads from
+the standard input file.
+.Pp
+.Sh SEE ALSO
+.Xr pr 1 ,
+.Xr cp 1 .
+.Sh DIAGNOSTICS
+if a file cannot be found a message is written to
+.Pa stderr .
+.Sh BUGS
+.Do
+.Nm
+.Ar x
+.Ar y
+.Ar \>&x
+.Dc
+and
+.Do
+.Nm
+.Ar x
+.Ar y
+.Ar \>&y
+.Dc
+cause strange results.
