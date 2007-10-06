@@ -44,7 +44,7 @@
 .Nd display or set date and time
 .Sh SYNOPSIS
 .Nm
-.Op Fl huIV
+.Op Fl uI?
 .Op Cm + Ns Ar format
 .Nm
 .Op Fl u
@@ -57,8 +57,6 @@ way or set the date.  Only the superuser may set the date.
 .Pp
 The options are as follows:
 .Bl -tag -width Ds
-.It Fl h
-Print a usage message, then exit.
 .It Fl I
 Display the Information Superhighway time  (It's always September
 on the Information Superhighway, and has been since 1993.)
@@ -66,8 +64,8 @@ on the Information Superhighway, and has been since 1993.)
 Display or set the date in
 .Tn UTC
 (universal) time.
-.It Fl V
-Show the toolkit version, then exit.
+.It Fl ?
+Print a usage message, then exit.
 .El
 .Pp
 An operand with a leading plus (``+'') sign signals a user-defined format

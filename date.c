@@ -17,8 +17,7 @@
 struct x_option opts[] = {
     { 'I', 'I', "psu", 0, "display information-superhighway time" },
     { 'u', 'u', "utc", 0, "display the UTC date" },
-    { 'h', 'h', "help", 0, "print this help message" },
-    { 'V', 'V', "version", 0, "display the version#" },
+    { '?', '?', "help", 0, "print this help message" },
 };
 #define nropts	(sizeof opts / sizeof opts[0])
 
@@ -170,9 +169,8 @@ char **argv;
 	switch (opt) {
 	case 'I': aol++; break;
 	case 'u': utc++; break;
-	case 'V': fprintf(stderr, "%s %s\n", pgm, version); exit(0);
-	case 'h':
-	default : usage(opt != 'h');
+	case '?':
+	default : usage(opt != '?');
 	}
     }
 
