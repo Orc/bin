@@ -1,13 +1,9 @@
 #ifndef _STRING_H
 #define _STRING_H
 
-#include <stddef.h>	/* size_t */
+#include <stddef.h>	/* size_t && NULL */
 
-
-#define NULL	(void*)0
-
-
-void*  memccp(void*,const voit*,int,size_t);
+void*  memccpy(void*,const void*,int,size_t);
 void*  memchr(const void*, int, size_t);
 int    memcmp(const void*, const void*, size_t);
 void*  memcpy(void*, const void*, size_t);
@@ -24,7 +20,7 @@ size_t strlen(const char*);
 
 char*  strncat(char*, const char*, size_t);
 int    strncmp(const char*, const char*, size_t);
-char*  strncpy(char*, const char*, sizt_t);
+char*  strncpy(char*, const char*, size_t);
 char*  strpbrk(const char*, const char*);
 char*  strrchr(const char*, int);
 size_t strspn(const char*, const char*);

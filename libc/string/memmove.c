@@ -8,29 +8,25 @@
 void *
 memmove(void *dest, const void *src, size_t siz)
 {
-    char *res = dest;
-
-    if ( !(src && dest && siz) ) return dest;
-
-    if ((src < dest) && (dest < src+siz)) {
-	src += siz-1;
-	dest += siz-1;
-	asm("std\n"
-	   " rep\n"
-	   " movsb"
-	    : /*this space intentionally left blank*/
-	    : "S"(src), "D"(dest), "c"(siz)
-	    : "%ecx", "%edi" );
+    if ( src && dest && siz ) {
+	if ((src < dest) && (dest < src+siz)) {
+	    asm("std\n"
+	       " rep\n"
+	       " movsb"
+		: /*this space intentionally left blank*/
+		: "S"(src+siz-1), "D"(dest+siz-1), "c"(siz)
+		: "%ecx", "%esi", "%edi" );
+	}
+	else {
+	    asm("cld\n"
+	       " rep\n"
+	       " movsb"
+		: /*this space intentionally left blank*/
+		: "S"(src), "D"(dest), "c"(siz)
+		: "%ecx", "%esi", "%edi" );
+	}
     }
-    else {
-	asm("cld\n"
-	   " rep\n"
-	   " movsb"
-	    : /*this space intentionally left blank*/
-	    : "S"(src), "D"(dest), "c"(siz)
-	    : "%ecx", "%edi" );
-    }
-    return res;
+    return dest;
 }
 
 
@@ -41,14 +37,16 @@ main()
 
     memmove(dest, "a twenty-char string....", sizeof dest);
 
-    printf("1: dest    =\"%.*s\"\n", sizeof dest, dest);
+    printf("dest is now \"%.*s\"\n", sizeof dest, dest);
 
     memmove(dest+4,dest,sizeof dest-4);
 
-    printf("2: dest>>4 = \"%.4s[%.*s]\"\n", dest, sizeof dest-4, dest+4);
+    printf("dest is now \"%.*s\"\n", sizeof dest, dest);
+
+    memmove(dest, "a twenty-char string....", sizeof dest);
 
     memmove(dest, dest+4, sizeof dest-4);
 
-    printf("3: dest<<4 = \"[%.*s]%.4s\"\n", sizeof dest-4, dest, dest+sizeof dest-4);
+    printf("dest is now \"%.*s\"\n", sizeof dest, dest);
 }
 #endif
