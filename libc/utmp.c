@@ -136,9 +136,9 @@ getutline(struct utmp *line)
     }
     else {
 	while ( read(ut_fd, &cache, sizeof cache) == sizeof cache ) {
-	    ut_pos += sizeof cache;
 	    if ( strcmp(line->ut_line, cache.ut_line) == 0 )
 		return &cache;
+	    ut_pos += sizeof cache;
 	}
     }
     return 0;
