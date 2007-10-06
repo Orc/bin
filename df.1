@@ -1,0 +1,67 @@
+.Dd February 9, 2001
+.Dt DF 1
+.Os Mastodon
+.Sh NAME
+.Nm df
+.Nd summarize free disk space
+.Sh SYNOPSIS
+.Nm
+.Op Fl -abkmhiTPl
+.Op Fl t Ar type
+.Op Fl x Ar type
+.Op Pa path
+.br
+.Sh DESCRIPTION
+.Nm
+shows the amount of disk space available on the filesystem containing
+each file name argument (or all the filesystems, if no such arguments
+are supplied.)   Disk space is shown in 512 byte blocks by default.
+.Sh OPTIONS
+.Bl -tag -width megamegamegabytes
+.It Fl a , Fl -all
+Show all filesystems, including those (like the
+.Pa /proc
+filesystem) that have zero blocks.
+.It Fl b , Fl -bytes
+Show disk space in bytes.
+.It Fl k , Fl -kilobytes
+Show disk space in 1024-byte blocks.
+.It Fl m , Fl -megabytes
+Show disk space in megabytes (1048576 bytes).
+.It Fl h , Fl -human-readable
+Show disk space in a somewhat friendlier fashion.  If the space
+is less than a megabyte, it will be given in kilobytes; if the
+space is gigabyte or less, it will be given in megabytes,
+and if it is larger than a gigabyte, it will be given in gigabytes.
+.It
+.It Fl i , Fl -inodes
+Show inode usage, not disk space.
+.It Fl l , Fl -local
+Show local filesystems only.
+.It Fl T , Fl -print-type
+Print the type of each filesystem.
+.It Fl P , Fl -posix
+Show disk space in 512-byte blocks.  This is the default output
+format, but the option exists in case the output format changes
+in the future.
+.It Fl h , Fl -help
+Give a help message, then exit.
+.It Fl t , Fl -type
+Show only filesystems of the given type.
+.It Fl x , Fl -exclude
+Exclude filesystems of the given type.
+.El
+.Pp
+.Sh FILES
+.Pp
+.Bl -tag -width /proc/mounts -compact
+.It Pa /etc/mnttab
+The list of mounted filesystems.
+.It Pa /proc/mounts
+the kernel list of mounted filesystems.
+.El
+.Pp
+.Sh AUTHORS
+.Bl -tag -width x
+.It An David Parsons Aq orc@pell.chi.il.us
+.El
