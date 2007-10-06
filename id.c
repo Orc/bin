@@ -54,7 +54,7 @@ struct x_option options[] = {
     { NAMES,	'n', "names", 		0,	"Print user/group names" },
     { USER_ID,	'u', "user-id", 	0,	"Print only the user-id" },
     { STD,      'S', "standard",	0,	"Use the standard id(name) format" },
-    { HELP,	'h', "help",		0,	"Give this help message" },
+    { HELP,	'?', "help",		0,	"Give this help message" },
 };
 #define NROPTIONS	(sizeof options/sizeof options[0])
 
@@ -106,7 +106,7 @@ usage(int rc)
 
     setbuffer(stderr, iob, sizeof iob);
 
-    fprintf(stderr, "\nusage: %s [options] [user]\n\n", pgm);
+    fprintf(stderr, "usage: %s [options] [user]\n", pgm);
     showopts(stderr, NROPTIONS, options);
     setbuf(stderr, NULL);
     exit(rc);

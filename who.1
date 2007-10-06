@@ -39,7 +39,7 @@
 .Nd display who is on the system
 .Sh SYNOPSIS
 .Nm
-.Op Fl HmqsTu
+.Op Fl HmqsTu?
 .Op Cm am I
 .Op Ar file
 .br
@@ -99,6 +99,8 @@ if the user has been idle more than 99 hours.
 .It Cm am I
 Equivalent to
 .Fl m .
+.It Li \&?
+Print a short usage message, then exit.
 .El
 .Pp
 By default,

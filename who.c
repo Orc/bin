@@ -10,6 +10,8 @@
 #include <sys/vfs.h>
 #define PROC_SUPER_MAGIC 0x9fa0
 
+#include <basis/options.h>
+
 int headings = 0;
 int mememe = 0;
 int quick = 0;
@@ -24,11 +26,30 @@ char *pgm = "who";
 #define SAME(a,b)	(strcasecmp(a,b) == 0)
 
 
+struct x_option opts[] = {
+    { 'H', 'H', 0, 0, "display headers" },
+    { 'm', 'm', 0, 0, "who am i?" },
+    { 'q', 'q', 0, 0, "only display user names and # of users" },
+    { 's', 's', 0, 0, "don't display # of users with -q" },
+    { 'T', 'T', 0, 0, "display mesg settings" },
+    { 'u', 'u', 0, 0, "display idle times" },
+    { '?', '?', "help", 0, "show this help message" },
+} ;
+
+#define NROPTS (sizeof opts / sizeof opts[0])
+
+
+
 void
-usage()
+usage(int fail)
 {
-    fprintf(stderr, "usage: who [-HmqsTu] [am I] [file]\n");
-    exit(1);
+    char iob[1024];
+
+    setbuffer(stderr, iob, sizeof iob);
+    fprintf(stderr, "usage: %s [-HmqsTu?] [am I] [file]\n", pgm);
+    showopts(stderr, NROPTS, opts);
+    setbuf(stderr, NULL);
+    exit(fail ? 1 : 0);
 }
 
 void
@@ -173,7 +194,6 @@ char **argv;
 
     pgm = basename(argv[0]);
 
-    opterr = 1;
 
     if ( statfs("/proc", &procfs) == 0 && procfs.f_type == PROC_SUPER_MAGIC )
 	haveprocfs = 1;
@@ -189,7 +209,8 @@ char **argv;
 	exit(1);
     }
 
-    while ( (opt=getopt(argc,argv, "HmqsTu")) != EOF ) {
+    x_opterr = 1;
+    while ( (opt=x_getopt(argc,argv, NROPTS, opts)) != EOF ) {
 	switch (opt) {
 	case 'H' : headings = 1; break;
 	case 'm' : mememe = 1; break;
@@ -197,12 +218,13 @@ char **argv;
 	case 's' : terse = 1; break;
 	case 'T' : mesg = 1; break;
 	case 'u' : activity = 1; break;
-	default  : usage();
+	case '?' :
+	default  : usage(opt != '?');
 	}
     }
 
-    argc -= optind;
-    argv += optind;
+    argc -= x_optind;
+    argv += x_optind;
 
     if ( (argc >= 2) && SAME(argv[0], "am") && SAME(argv[1], "I") ) {
 	mememe = 1;
@@ -213,7 +235,7 @@ char **argv;
     if ( argc == 1 )
 	utmpname(argv[0]);
     else if ( argc > 1 )
-	usage();
+	usage(1);
 
     time(&now);
     if (mememe)
