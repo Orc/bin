@@ -38,7 +38,7 @@ cat(char* file)
     char bfr[5120];
     int siz;
 
-    if (strcmp(file, "-") == 0)
+    if (file[0] == '-' && file[1] == 0)
 	fd = 0;
     else if ( (fd = open(file, O_RDONLY)) == -1 ) {
 	perror(file);
