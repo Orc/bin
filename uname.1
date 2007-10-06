@@ -1,0 +1,47 @@
+.Dd August 21, 2002
+.Os Mastodon
+.Sh NAME
+.Nm uname
+.Nd print system information
+.Sh SYNOPSIS
+.Nm uname
+.Op Fl -smnvra?
+.Sh DESCRIPTION
+.Nm
+displays information about the computer it's run on.  Without arguments,
+uname tells you the operating system it's running on.
+.Pp
+.Sy Options
+.Bl -tag -width -operating-system
+.It Fl s , Fl -operating-system
+Show the operating system name.
+.It Fl m, Fl -hardware
+Show information about the hardware that it's running on.
+.Nm
+traditionally displays the cpu type.
+.It Fl n , Fl -nodename
+Show the machine name (like the
+.Em hostname
+command does.)
+.It Fl v
+Show the operating system version.
+.It Fl r , Fl -release
+Show the operating system release.  Under Linux, the
+operating system version and release are not what you might
+expect;  the
+.Em release
+is the common major.minor.patchlevel
+.Pq e.g. Ar 2.0.28
+while the
+.Em version
+is the build information.
+.It Fl a , Fl -all
+Shows all the above information, as if you did
+.Dq uname Fl smnvr
+.It Fl v , Fl -version
+Show the version number (and only the version number), then exit.
+.It Fl ? , Fl -help
+Show a short help message, then exit.
+.El
+.Sh AUTHOR
+.An David Parsons Aq orc@pell.chi.il.us

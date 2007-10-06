@@ -1,7 +1,7 @@
 CFLAGS = -Ilibc -I.
 
 
-PROGS=date who cat id df
+PROGS=date who cat id df uname
 
 
 all: $(PROGS)
@@ -15,6 +15,8 @@ cat:   cat.o
 id:    id.o basis/options.o
 
 df:    df.o basis/options.o
+
+uname: uname.o basis/options.o
 
 
 clean: 
