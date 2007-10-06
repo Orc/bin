@@ -5,7 +5,7 @@
 .Nd print system information
 .Sh SYNOPSIS
 .Nm uname
-.Op Fl -smnvra?
+.Op Fl -smnvrap?
 .Sh DESCRIPTION
 .Nm
 displays information about the computer it's run on.  Without arguments,
@@ -21,7 +21,7 @@ Show information about the hardware that it's running on.
 traditionally displays the cpu type.
 .It Fl n , Fl -nodename
 Show the machine name (like the
-.Em hostname
+.Xr hostname 1
 command does.)
 .It Fl v
 Show the operating system version.
@@ -38,8 +38,11 @@ is the build information.
 .It Fl a , Fl -all
 Shows all the above information, as if you did
 .Dq uname Fl smnvr
-.It Fl v , Fl -version
-Show the version number (and only the version number), then exit.
+.It Fl p , Fl -processor
+Linux compatability hack;  
+.Fl q
+is an alias for 
+.Fl m .
 .It Fl ? , Fl -help
 Show a short help message, then exit.
 .El
