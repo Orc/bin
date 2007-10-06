@@ -11,7 +11,8 @@ memcpy(char* dest, const char* src, size_t siz)
 	   " rep\n"
 	   " movsb"
 	    : /*this space intentionally left blank*/
-	    : "S"(src), "D"(dest), "c"(siz));
+	    : "S"(src), "D"(dest), "c"(siz)
+	    : "%ecx", "%edi" );
     }
     return dest;
 }

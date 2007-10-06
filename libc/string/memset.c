@@ -10,7 +10,8 @@ memset(void *dest, int c, size_t siz)
        " rep\n"
        " stosb"
        : /* this space intentionally left blank */
-       : "c" (siz), "a" (c), "D" (dest));
+       : "c" (siz), "a" (c), "D" (dest)
+       : "%ecx", "%edi" );
 
     return dest;
 }
@@ -22,6 +23,11 @@ main()
     char dest[20];
 
     if (dest != memset(dest, '!', sizeof dest))
+	printf("dest is != memset(dest)\n");
+
+    printf("dest is now \"%.*s\"\n", sizeof dest, dest);
+
+    if (dest != memset(dest, '?', sizeof dest/2))
 	printf("dest is != memset(dest)\n");
 
     printf("dest is now \"%.*s\"\n", sizeof dest, dest);
