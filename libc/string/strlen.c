@@ -5,7 +5,7 @@ strlen(const char* s)
 {
     register size_t siz;
 
-    if ( !s ) return 0;
+    /*if ( !s ) return 0;*/
 
     asm("cld\n"
        " repne\n"

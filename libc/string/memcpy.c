@@ -4,7 +4,7 @@ void*
 memcpy(void* dest, const void* src, size_t siz)
 {
 
-    if ( dest && src && siz ) 
+    if ( /*dest && src &&*/ siz ) 
 	asm("cld\n"
 	   " rep\n"
 	   " movsb"

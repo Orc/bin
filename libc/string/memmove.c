@@ -8,7 +8,7 @@
 void *
 memmove(void *dest, const void *src, size_t siz)
 {
-    if ( src && dest && siz ) {
+    if ( /*src && dest &&*/ siz ) {
 	if ((src < dest) && (dest < src+siz)) {
 	    asm("std\n"
 	       " rep\n"

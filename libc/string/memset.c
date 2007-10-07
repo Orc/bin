@@ -4,7 +4,7 @@
 void *
 memset(void *dest, int c, size_t siz)
 {
-    if ( dest && siz )
+    if ( /*dest &&*/ siz )
 	asm("cld\n"
 	   " rep\n"
 	   " stosb"

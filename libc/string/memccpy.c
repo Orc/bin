@@ -11,7 +11,7 @@ memccpy(void* dest,const void* src,int ch,size_t siz)
 {
     register void *res;
 
-    if ( dest && src && siz ) {
+    if ( /*dest && src &&*/ siz ) {
 	asm("cld\n"
 	   "1:lodsb\n"
 	   " stosb\n"

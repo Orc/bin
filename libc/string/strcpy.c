@@ -4,7 +4,7 @@ char*
 strcpy(char* dest, const char* src)
 {
 
-    if ( src && dest )
+    /*if ( src && dest )*/
 	asm("cld\n"
 	   "1:lodsb\n"
 	   "  stosb\n"

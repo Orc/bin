@@ -6,7 +6,7 @@ memchr(const void* s, int c, size_t siz)
     void *ret;
 
 
-    if ( s && siz ) {
+    if ( /*s &&*/ siz ) {
 	asm("cld\n"
 	   " repne\n"
 	   " scasb\n"
