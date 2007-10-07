@@ -1,6 +1,6 @@
 CC=cc -baout
 FUNCS=memccpy.o memchr.o memcmp.o memcpy.o memmove.o memset.o \
-      strcpy.o strlen.o
+      strcpy.o strlen.o strdup.o
 
 all: $(FUNCS)
 

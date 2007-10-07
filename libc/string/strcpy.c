@@ -1,54 +1,47 @@
 #include <string.h>
 
-void*
-strcpy(char* dest, const char* src, size_t siz)
+char*
+strcpy(char* dest, const char* src)
 {
 
-    if (!dest) return 0;
-
-    if (src && (siz > 0)) {
+    if ( src && dest )
 	asm("cld\n"
-	   " rep\n"
-	   " movsb"
-	    : /*this space intentionally left blank*/
-	    : "S"(src), "D"(dest), "c"(siz));
-    }
+	   "1:lodsb\n"
+	   "  stosb\n"
+	   "  orb %%al,%%al\n"
+	   "  jnz 1b"
+	    : /* this space intentionally left blank */
+	    : "S"(src), "D"(dest) );
     return dest;
 }
 
 
 #if TEST
+
+void
+test(char *dest, char *src, size_t siz)
+{
+    char *res;
+
+
+    if (dest) bzero(dest, siz);
+
+    printf("strcpy(%x,\"%s\") = ", dest, src ? src : "null");
+
+    res = strcpy(dest,src);
+
+    printf("\"%s\"\n", res);
+
+}
+
 main()
 {
     char dest[20];
     char *res;
 
-    char *dest2 = dest + 4;
 
-    /* good result */
-    strcpy(dest, "a twenty-char string", sizeof dest);
-
-    printf("dest is now \"%.*s\"\n", sizeof dest, dest);
-
-    /* overlapping copy */
-
-    strcpy(dest2, dest, 4);
-
-    printf("dest is now \"%.*s[%.*s]%.*s\"\n",
-	    4, dest,
-	    4, dest+4,
-	    sizeof dest - 8, dest+8);
-
-    /* overlapping copy 2 */
-
-    strcpy(dest, "a twenty-char string", sizeof dest);
-
-    strcpy(dest, dest2, 4);
-
-    printf("dest is now \"%.*s[%.*s]%.*s\"\n",
-	    4, dest,
-	    4, dest+4,
-	    sizeof dest - 8, dest+8);
-
+    test(dest, "a twenty-char string", sizeof dest);
+    test(dest, NULL, sizeof dest);
+    test(NULL, "a twenty-char string", sizeof dest);
 }
 #endif
