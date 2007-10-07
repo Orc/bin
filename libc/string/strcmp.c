@@ -38,9 +38,15 @@ main()
     test("b", "a");
     test("aaa", "aaa");
     test("aaa", "aab");
-    test("aaa", "aba");
     test("aab", "aaa");
+    test("aaa", "aba");
     test("aba", "aaa");
+    test("aaaaa", "aaa");
+    test("aaaaa", "aab");
+    test("aabaa", "aaa");
+    test("aaa", "aaaaa");
+    test("aaa", "aabaa");
+    test("aab", "aaaaa");
 }
 
 #endif
