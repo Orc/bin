@@ -7,7 +7,7 @@ memcmp(const void *s1, const void *s2, size_t size)
 
     if ( !size ) return 0;
 
-    if ( !s1 ) return s2 ? -1 : 0;
+    if ( !s1 ) return -1;
     if ( !s2 ) return 1;
 
     asm("cld\n"
