@@ -26,18 +26,39 @@ strstr(const char* haystack, const char* needle)
 
     if (hssiz) {
 	for ( ;hssiz-- >= ndsiz; ++haystack ) {
-	    asm("cld\n"
-	       " repe\n"
-	       " cmpsb\n"
-	       " je 1f\n"
-	       " sbbl %%eax,%%eax\n"
-	       " or $1,%%al\n"
+	    asm( "cld\n"
+	       "  repe\n"
+	       "  cmpsb\n"
+	       "  je 1f\n"
+	       "xorl %%eax,%%eax\n"
 	       "1:"
 		: "=a" (ok)
-		: "a" (0), "S" (haystack), "D" (needle), "c" (ndsiz)
+		: "a" (1), "S" (haystack), "D" (needle), "c" (ndsiz)
 		: "%edi", "%esi", "%ecx" );
 	    if (ok) return (char*)haystack;
 	}
     }
     return 0;
 }
+
+#if TEST
+
+void
+test(char *hay, char *needle)
+{
+    char *res = strstr(hay,needle);
+
+    printf("strstr(\"%s\",\"%s\") = \"%s\"\n", hay, needle, res);
+}
+
+main()
+{
+    test("aabbcc", "bb");
+    test("aabbccaabbcc", "bb");
+    test("aabbcc", "dd");
+    test("aabbcc", "aabbcc");
+    test("aabbcc", "aabbccdd");
+    test("aabbcc", "qqrrsstt");
+}
+
+#endif
