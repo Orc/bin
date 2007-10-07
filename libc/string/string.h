@@ -21,6 +21,9 @@ char*  strncpy(char*, const char*, size_t);
 char*  strncat(char*, const char*, size_t);
 int    strncmp(const char*, const char*, size_t);
 
+int    strcasecmp(const char*,const char*);
+int    strncasecmp(const char*,const char*,size_t);
+
 char*  strdup(const char*);
 char*  strerror(int);
 
