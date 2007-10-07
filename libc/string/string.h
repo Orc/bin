@@ -31,6 +31,10 @@ size_t strspn(const char*, const char*);
 char*  strstr(const char*, const char*);
 char*  strtok(char*, const char*);
 char*  strtok_r(char*, const char*, char **);
+#if LOCALE
 size_t strxfrm(char*, const char*, size_t);
+#else
+#define strxfrm(d,s,c) strncpy(d,s,c)
+#endif
 
 #endif _STRING_H
