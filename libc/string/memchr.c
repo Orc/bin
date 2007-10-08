@@ -40,7 +40,6 @@ main()
 
     test("abcd---ed", 'd', 3);
     test("abcd---ed", 'f', 4);
-    test(NULL, 'a', 4);
     test("abcd---ed", 'f', 0);
 }
 #endif

@@ -22,7 +22,7 @@ memccpy(void* dest,const void* src,int ch,size_t siz)
 	   "2:"
 	    : "=D" (res), "=c" (siz)
 	    : "S" (src), "D" (dest), "b" (ch), "c" (siz)
-	    : "%eax", "%esi" );
+	    : "%eax" );
 	if (siz) return res;
     }
     return NULL;

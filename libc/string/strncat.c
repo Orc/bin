@@ -17,8 +17,7 @@ strncat(char* dest, const char* src, size_t siz)
 	   "  jnz 1b\n"
 	   "2:"
 	   : /* this space intentionally left blank */
-	   : "D" (dest), "S" (src), "a" (0), "b" (siz), "c" (-1L)
-	   : "%edi", "%esi", "%ecx" );
+	   : "D" (dest), "S" (src), "a" (0), "b" (siz), "c" (-1L) );
     return dest;
 }
 

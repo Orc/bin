@@ -13,8 +13,7 @@ strchr(const char* target, int ch)
        "  jne 1b\n"
        "2:"
 	: "=a" (ch), "=S" (res)
-	: "S" (target), "b" (ch)
-	: "%eax" );
+	: "S" (target), "b" (ch) );
     return ch ? (res-1) : NULL;
 }
 

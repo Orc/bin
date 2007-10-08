@@ -25,8 +25,7 @@ strcspn(const char* target, const char* cset)
 	   " movl $1,%%eax\n"
 	   "1:decl %%eax"
 	   : "=a" (found)
-	   : "a" (*target), "D" (cset), "c" (csiz)
-	   : "%edi","%ecx");
+	   : "a" (*target), "D" (cset), "c" (csiz) );
 	if (found) break;
     }
     return count;

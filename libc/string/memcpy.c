@@ -9,8 +9,7 @@ memcpy(void* dest, const void* src, size_t siz)
 	   " rep\n"
 	   " movsb"
 	    : /*this space intentionally left blank*/
-	    : "S"(src), "D"(dest), "c"(siz)
-	    : "%ecx", "%esi", "%edi" );
+	    : "S"(src), "D"(dest), "c"(siz) );
 
     return dest;
 }

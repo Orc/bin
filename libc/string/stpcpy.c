@@ -11,8 +11,7 @@ stpcpy(char* dest, const char* src)
        "  jnz 1b\n"
        "  dec %%edi"
 	: "=D" (dest)
-	: "S"(src), "D"(dest)
-	: "%eax", "%esi" );
+	: "S"(src), "D"(dest) );
     return dest;
 }
 

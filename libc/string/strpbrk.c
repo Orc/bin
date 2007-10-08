@@ -24,8 +24,7 @@ strpbrk(const char* target, const char* sset)
 	   "  xorl %%eax,%%eax\n"
 	   "1:"
 	   : "=a" (bingo)
-	   : "a" (*target), "D" (sset), "c" (ssiz)
-	   : "%ecx");
+	   : "a" (*target), "D" (sset), "c" (ssiz) );
 	if (bingo) return (char*)target;
     }
     return 0;

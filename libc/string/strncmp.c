@@ -22,8 +22,7 @@ strncmp(const char* s1, const char* s2, size_t siz)
        "3:xorl %%eax,%%eax\n"
        "4:"
        : "=a" (cmp)
-       : "S" (s1), "D" (s2), "c" (siz)
-       : "%esi", "%edi" );
+       : "S" (s1), "D" (s2), "c" (siz) );
     return cmp;
 }
 

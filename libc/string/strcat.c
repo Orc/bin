@@ -13,8 +13,7 @@ strcat(char* dest, const char* src)
        "  orb %%al,%%al\n"
        "  jnz 1b"
        : /* this space intentionally left blank */
-       : "D" (dest), "S" (src), "a" (0), "c" (-1L)
-       : "%edi", "%esi", "%ecx" );
+       : "D" (dest), "S" (src), "a" (0), "c" (-1L) );
     return dest;
 }
 

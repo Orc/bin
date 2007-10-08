@@ -41,7 +41,5 @@ main()
 
 
     test(dest, "a twenty-char string", sizeof dest);
-    test(dest, NULL, sizeof dest);
-    test(NULL, "a twenty-char string", sizeof dest);
 }
 #endif

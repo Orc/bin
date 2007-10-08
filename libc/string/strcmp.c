@@ -16,8 +16,7 @@ strcmp(const char*s1, const char*s2)
        "  orb $1, %%al\n"
        "3:"
        : "=a" (cmp)
-       : "S" (s1), "D" (s2), "a" (0)
-       : "%esi", "%edi" );
+       : "S" (s1), "D" (s2), "a" (0) );
     return cmp;
 }
 

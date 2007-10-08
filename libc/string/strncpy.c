@@ -15,8 +15,7 @@ strncpy(char* dest, const char* src, size_t siz)
 	   "  stosb\n"
 	   "2:"
 	    : /* this space intentionally left blank */
-	    : "S" (src), "D" (dest), "c" (siz)
-	    : "%ecx", "%edx", "%esi" );
+	    : "S" (src), "D" (dest), "c" (siz) );
     return dest;
 }
 

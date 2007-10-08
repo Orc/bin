@@ -19,8 +19,7 @@ strrchr(const char* str, int ch)
        "  movl $-1,%%edi\n"
        "1:incl %%edi"
        : "=D" (res)
-       : "D" (str), "a" (0), "b" (ch), "c" (-1L)
-       : "%eax", "%ecx" );
+       : "D" (str), "a" (0), "b" (ch), "c" (-1L) );
     return res;
 }
 

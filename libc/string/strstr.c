@@ -12,16 +12,14 @@ strstr(const char* haystack, const char* needle)
        " notl %0\n"
        " decl %0\n"
        : "=c" (hssiz)
-       : "D" (haystack), "a" (0), "c" (-1L)
-       : "%edi");
+       : "D" (haystack), "a" (0), "c" (-1L) );
     asm("cld\n"
        " repne\n"
        " scasb\n"
        " notl %0\n"
        " decl %0\n"
        : "=c" (ndsiz)
-       : "D" (needle), "a" (0), "c" (-1L)
-       : "%edi");
+       : "D" (needle), "a" (0), "c" (-1L) );
 
 
     if (hssiz) {
@@ -33,8 +31,7 @@ strstr(const char* haystack, const char* needle)
 	       "xorl %%eax,%%eax\n"
 	       "1:"
 		: "=a" (ok)
-		: "a" (1), "S" (haystack), "D" (needle), "c" (ndsiz)
-		: "%edi", "%esi", "%ecx" );
+		: "a" (1), "S" (haystack), "D" (needle), "c" (ndsiz) );
 	    if (ok) return (char*)haystack;
 	}
     }

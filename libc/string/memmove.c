@@ -14,16 +14,14 @@ memmove(void *dest, const void *src, size_t siz)
 	       " rep\n"
 	       " movsb"
 		: /*this space intentionally left blank*/
-		: "S"(src+siz-1), "D"(dest+siz-1), "c"(siz)
-		: "%ecx", "%esi", "%edi" );
+		: "S"(src+siz-1), "D"(dest+siz-1), "c"(siz) );
 	}
 	else {
 	    asm("cld\n"
 	       " rep\n"
 	       " movsb"
 		: /*this space intentionally left blank*/
-		: "S"(src), "D"(dest), "c"(siz)
-		: "%ecx", "%esi", "%edi" );
+		: "S"(src), "D"(dest), "c"(siz) );
 	}
     }
     return dest;

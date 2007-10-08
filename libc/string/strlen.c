@@ -28,7 +28,6 @@ test(char *s)
 
 main()
 {
-    test(NULL);
     test("123456789");
     test("1");
 }

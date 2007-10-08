@@ -15,8 +15,7 @@ strdup(const char* src)
        " scasb\n"
        " notl %0\n"
        : "=c" (siz)
-       : "D" (src), "a" (0), "c" (-1L)
-       : "%edi");
+       : "D" (src), "a" (0), "c" (-1L) );
 
 #if TEST
     printf("in strdup: siz+1 = %d\n", siz);
@@ -28,8 +27,7 @@ strdup(const char* src)
 	   " rep\n"
 	   " movsb"
 	    : /*this space intentionally left blank*/
-	    : "S"(src), "D"(res), "c"(siz)
-	    : "%edi", "%esi");
+	    : "S"(src), "D"(res), "c"(siz) );
     return res;
 }
 

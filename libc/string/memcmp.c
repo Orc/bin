@@ -20,8 +20,7 @@ memcmp(const void *s1, const void *s2, size_t size)
        " or $1,%%al\n"
        "1:"
 	: "=a" (res)
-	: "a" (0), "S" (s1), "D" (s2), "c" (size)
-	: "%eax" );
+	: "a" (0), "S" (s1), "D" (s2), "c" (size) );
 
     return res;
 }
@@ -44,9 +43,6 @@ main()
     test("abac", "aaab", 4);
     test("a", "a", 1);
     test("b", "a", 1);
-    test(NULL,"a", 1);
-    test("b",NULL, 1);
-    test(NULL,NULL, 1);
     test("a","b", 0);
 }
 #endif
