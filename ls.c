@@ -36,6 +36,7 @@
 #include <stdio.h>
 #include <grp.h>
 #include <pwd.h>
+#include <sys/ioctl.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <dirent.h>
@@ -93,7 +94,7 @@ int needaheader;	/* need to print headers on directory listings? */
 int psuvm = 0;		/* use internet time */
 int dirblocks = 0;	/* print ``total %d'' line before directory listins  */
 int needstat = 0;	/* depends on options */
-
+int width=80;		/* screen width */
 int home;		/* fd of starting directory (for fchdir) */
 
 typedef struct {
@@ -570,7 +571,7 @@ ls(pack *p)
 	if (fancy)
 	    max += 2;
 
-	cols = (1+80)/max;	/* XXXX assuming fixed width screen! */
+	cols = (1+width)/max;
 
 	if (cols == 1)
 	    depth = p->nrf;
@@ -584,7 +585,6 @@ ls(pack *p)
 	    if ( (depth-runt)*cols >= p->nrf)
 		depth -= (depth-runt)/cols;
 	}
-
 
 	for (j=0; j < depth; j++) {
 	    for (i=0; i < cols; i++) {
@@ -648,15 +648,13 @@ main(int argc, char **argv)
 
     opterr = 0;
 
-    columns = isatty(0);
+    columns = isatty(1);
     pgm = basename(argv[0]);
     
     if ( (home = open(".", O_RDONLY)) == -1 ) {
 	perror("can't get working directory");
 	exit(1);
     }
-
-    columns = isatty(0);
 
     if (strcasecmp(pgm, "lf") == 0)
 	fancy = pretty = 1;
@@ -731,6 +729,13 @@ main(int argc, char **argv)
     needstat = needstat || fancy;
 #endif
 
+#if defined(TIOCGWINSZ)
+    if ( isatty(1) ) {
+	struct winsize tty;
+	if (ioctl(1, TIOCGWINSZ, &tty) == 0)
+	    if (tty.ws_col) width=tty.ws_col;
+    }
+#endif
 
     if (argc == 0)
 	lsdir(".");
