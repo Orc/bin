@@ -166,11 +166,7 @@ remember(map *p, int key, char *name)
 static int
 skip(char *s)
 {
-    if ( *s == '.' ) {
-	if ( all ) return 0;
-	if ( s[1] == 0 || (s[1] == '.' && s[1] == 0) ) return 1;
-    }
-    return 0;
+    return !( all || (*s != '.') );
 }
 
 void
