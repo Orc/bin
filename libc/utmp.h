@@ -6,6 +6,9 @@
 #include <paths.h>
 
 
+#ifndef _PATH_UTMP
+#define _PATH_UTMP	"/var/log/utmp"
+#endif
 #define UTMP_FILE	_PATH_UTMP
 #define UTMP_FILENAME	UTMP_FILE
 

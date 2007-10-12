@@ -21,8 +21,7 @@ memccpy(void* dest,const void* src,int ch,size_t siz)
 	   " jne 1b\n"
 	   "2:"
 	    : "=D" (res), "=c" (siz)
-	    : "S" (src), "D" (dest), "b" (ch), "c" (siz)
-	    : "%eax" );
+	    : "S" (src), "D" (dest), "b" (ch), "c" (siz) );
 	if (siz) return res;
     }
     return NULL;
