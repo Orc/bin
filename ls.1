@@ -1,0 +1,234 @@
+.Dd October 9, 2007
+.Os Mastodon
+.Dt LS 1
+.Sh NAME
+.Nm ls
+.Nd list contents of directory
+.Sh SYNOPSIS
+.Nm
+.Op Fl acdfghilrstuBCFI1
+.Op Fl S Ns Ar order
+.Pa file Ns Ar ...
+.Sh DESCRIPTION
+For each directory argument, 
+.Nm
+lists the contents of the directory;
+for each file argument,
+.Nm
+repeats it's name any any other information requested.
+The output is sorted alphabetically by default.
+When no argument is given, the current directory is listed.
+When several arguments are given, the arguments are first sorted
+appropriately, but file arguments appear before directories and
+their contents.
+There are several options:
+.Bl -tag -width opt-and-arg
+.It Fl a
+List all entries;  usually entries starting with
+.Dq \&.
+are suppressed.
+.It Fl c
+Use time of last modification instead of creation time for 
+sorting
+.Pq Fl t
+or printing
+.Pq Fl l Ns .
+.It Fl d
+If argument is a directory, list only its name, not its contents
+(mostly used with
+.Fl l
+to get status on directory.)
+.It Fl f
+Do not sort the output.
+.It Fl g
+Print group ids in 
+.Fl l
+listings (this is the default.)
+.It Fl h
+Print sizes in
+.Sq human-readable
+format (e.g.; 1K, 2.5M, 4G.)
+.It Fl i
+Print i-number in first column of the report for each file
+listed.
+.It Fl l
+Long listing (see below.)
+.It Fl r
+Reverse the order of sort to get reverse alphabetic or oldest
+first as appropriate.
+.It Fl s
+Give size in blocks for each entry.
+.It Fl t
+Sort by time modified (latest first) instead of by name, as is normal.
+.It Fl u
+Use time of last access instead of last modification for 
+sorting 
+.Pq Fl t
+or printing
+.Pq Fl l Ns .
+.It Fl B
+When printing entry names, display unprintable and control characters
+as 
+.Ar ? .
+.It Fl C
+Force multi-column output.
+.It Fl F
+Print fancy output;  directory entries will be quoted as
+.Bq name ,
+sockets will have a 
+.Ar \&=
+suffix, pipes will have a 
+.Ar \&| 
+suffix, softlinks will have a
+.Ar \&@
+suffix, and executable files will marked with a
+.Ar \&* .
+.It Fl I
+Use 
+.Em "information-superhighway"
+date format in long listings.
+.It Fl S Ar order
+Extended sort options.
+.Ar order
+may be:
+.Bl -tag -width "Sy LENGTH" -compact
+.It Sy TIME
+Sort by time
+.Pq like Fl t .
+.It Sy NAME
+Sort alphabetically.
+.It Sy SIZE
+Sort by entry size.
+.It Sy LENGTH
+Sort by entry name length.
+.El
+.It Fl 1
+Force single-column output.
+.El
+.Pp
+Additionally, gnu-style long options
+.Pq Dq Fl -blah-blah
+are silently discarded.
+.Pp
+.Sy Long listings
+.Pp
+If the
+.Fl l
+option is given, the following information is displayed for
+each entry; file mode, number of links, owner name, group name,
+number of bytes in the entry, the date when the entry was last
+modified, and the name of the entry.  In addition, for each directory
+whose contents are displayed, the total number of 512-byte blocks
+used by the entries in that directory is displayed on a line by itself
+immediate before the information for the entries in the directory.
+.Pp
+If the modification time of the entry is more than six months in
+the past or future, the date is displayed as
+.Em month day year ,
+otherwise it is displayed as
+.Em month day hour:minute .
+.Pp
+If the owner or group names are not known, the numeric ID's are
+displayed.
+.Pp
+If the entry is for a symbolic link, the target of that 
+link will be displayed after the entry name in the format
+.Em name Ar \&-\&> target .
+.Pp
+The
+.Em file mode
+printed under the 
+.Fl l
+option consists of the entry type and permissions,
+The entry type character describes the type of entry,
+as follows:
+.Pp
+.Bl -tag -width XX -compact
+.It Sy b
+Block special file.
+.It Sy c
+Character special file.
+.It Sy d
+Directory.
+.It Sy l
+Symbolic link.
+.It Sy s
+Socket.
+.It Sy p
+FIFO.
+.It Sy \&-
+Regular file.
+.El
+.Pp
+The permissions is three fields giving owner, group,
+and other permissions.  Each field has three character positions:
+.Bl -tag -width XX
+.It 1.
+If
+.Sy r ,
+the entry is readable; if
+.Sy \&- ,
+it is not readable.
+.It 2.
+If
+.Sy w ,
+the entry is writable; if
+.Sy \&- ,
+it is not writable.
+.It 3.
+The first of the following that applies:
+.Bl -tag -width XX -indent
+.It Sy S
+If in the owner permissions, the entry is set-user-ID mode,
+but the entry is not executable.   If in group permissions,
+the entry is set-group-ID mode, but is not group executable.
+.It Sy s
+If in the owner permissions, the entry is set-user-ID mode
+and executable.  If in group permissions, the entry is
+set-group-ID mode and group executable.
+.It Sy x
+The entry is executable or the directory is searchable.
+.It Sy \&-
+The entry is neither readable, writable, executable, nor set-user-ID
+nor set-group-ID nor sticky.
+.El
+.Pp
+The next two apply only to the third character in third group
+(other permissions.)
+.Bl -tag -width XX
+.It Sy T
+The sticky bit is set (mode 1000) but not execute or search
+permission
+(See 
+.Xr chmod 1
+or
+.Xr sticky 8 .)
+.It Sy t
+The sticky bit is set and the entry is searchable or executable.
+.El
+.Sh EXAMPLES
+.Pp
+.Bl -tag -width "Sy ls \&-Ssize" -compact
+.It Sy "ls -Ssize"
+List the contents of the current directory, sorted by size.
+.It Sy "ls -tr"
+List the contents of the current directory, sorted oldest first.
+.El
+.Sh DIAGNOSTICS
+.Ex -std
+.Sh SEE ALSO
+.Xr chmod 1 ,
+.Xr symlink 7 ,
+.Xr sticky 8 .
+.Sh HISTORY
+An
+.Nm
+command appeared in
+.At v1
+.Sh BUGS
+.Pp
+The format of information-superhighway style dates is not as
+attractive as it could be.
+.Pp
+.Em information-superhighway
+date format is silly.
