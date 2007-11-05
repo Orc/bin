@@ -76,7 +76,7 @@ int columns;		/* display in columns */
 int all = 0;		/* show all files except . and .. */
 int follow = 0;		/* follow links */
 enum {NOT,BYNAME,BYTIME,BYSIZE,BYLEN} sortorder = BYNAME;
-enum {ATIME,CTIME,MTIME} whichtime = CTIME;
+enum {ATIME,CTIME,MTIME} whichtime = MTIME;
 int inodes = 0;		/* print inodes */
 int links = 0;		/* print # links */
 int directories = 1;	/* print contents of directories */
@@ -681,7 +681,7 @@ main(int argc, char **argv)
 		    break;
 	case 'f':   sortorder = NOT;
 		    break;
-	case 'c':   whichtime = MTIME;
+	case 'c':   whichtime = CTIME;
 		    break;
 	case 'd':   directories = 0;
 		    break;
