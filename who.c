@@ -3,12 +3,7 @@
 #include <utmp.h>
 #include <sys/stat.h>
 #include <unistd.h>
-/* sys/vfs.h and PROC_SUPER_MAGIC are here for zombie
- * utmp entries;  if proc exists, we can peek in to see
- * if a ut->ut_pid is pointing to a real process or not.
- */
-#include <sys/vfs.h>
-#define PROC_SUPER_MAGIC 0x9fa0
+#include <errno.h>
 
 #include <basis/options.h>
 
@@ -18,7 +13,6 @@ int quick = 0;
 int terse = 0;
 int mesg = 0;
 int activity = 0;
-int haveprocfs = 0;
 time_t now;
 
 char *pgm = "who";
@@ -151,15 +145,7 @@ whoami()
 int
 alive(pid_t pid)
 {
-    char procpid[sizeof "/proc/" + (5*sizeof pid) + 1];
-
-    if (haveprocfs) {
-	snprintf(procpid, sizeof procpid, "/proc/%u", pid);
-	if ( access(procpid, R_OK) != 0 )
-	    return 0;
-
-    }
-    return 1;
+    return (kill(pid,0) == 0 || errno == EPERM);
 }
 
 
@@ -194,9 +180,6 @@ char **argv;
 
     pgm = basename(argv[0]);
 
-
-    if ( statfs("/proc", &procfs) == 0 && procfs.f_type == PROC_SUPER_MAGIC )
-	haveprocfs = 1;
 
     if ( SAME(pgm, "whoami") ) {
 	mememe=quick=1;
