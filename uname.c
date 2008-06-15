@@ -134,6 +134,9 @@ main(int argc, char ** argv)
 	exit(1);
     }
 
+    if (strcmp(info.machine, "i?86") == 0)
+	strcpy(info.machine, "i386");
+
     if (showme & SHOW_OS)
 	spit(info.sysname);
     if (showme & SHOW_NAME)
