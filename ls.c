@@ -730,10 +730,8 @@ main(int argc, char **argv)
     needaheader = (argc > 1);
     needstat = follow || inodes || links || dates || sizes
 		      || (sortorder==BYTIME) || (sortorder==BYSIZE)
-		      || blocks || owner || permissions || dirblocks;
-#if !defined(DTTOIF)
-    needstat = needstat || fancy;
-#endif
+		      || blocks || owner || permissions || dirblocks
+		      || fancy;
 
 #if defined(TIOCGWINSZ)
     if ( isatty(1) ) {
