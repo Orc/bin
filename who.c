@@ -176,7 +176,6 @@ int argc;
 char **argv;
 {
     int opt;
-    struct statfs procfs;
 
     pgm = basename(argv[0]);
 

@@ -439,7 +439,7 @@ printsizes(off_t size)
 {
     if (fancysizes) {
 	if (size < 10000)
-	    printf("%6lu ", size);
+	    printf("%6ld ", size);
 	else {
 	    static char ext[] = "KMGTPEZY";
 
@@ -463,7 +463,7 @@ printsizes(off_t size)
 	}
     }
     else
-	printf("%8lu ", size);
+	printf("%8ld ", size);
 }
 
 
@@ -572,14 +572,10 @@ ls(pack *p)
 	if (fancy)
 	    max += 2;
 
-	max += 1;
+	cols = width/max;
 
-	cols = (1+width)/max;
-
-	if (cols <= 1) {
-	    cols = 1;
+	if (cols == 1)
 	    depth = p->nrf;
-	}
 	else if (cols == p->nrf)
 	    depth = 1;
 	else {
