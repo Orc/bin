@@ -564,7 +564,7 @@ ls(pack *p)
 
 	if (!fancy)
 	    max += 2;
-	maxuf = max;
+	maxuf = max+1;
 	if (inodes)
 	    max += 8;
 	if (blocks)
