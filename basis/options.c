@@ -167,7 +167,7 @@ showopts(FILE *dest, int optcount, struct x_option *opts)
 
 
     for (n = 0; n < optcount; n++) {
-	if (opts[n].optval == 0)
+	if (opts[n].optval == 0 || opts[n].description == 0)
 	    continue;
 	argsize = optsize = 0;
 	if (opts[n].flag)

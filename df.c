@@ -495,6 +495,7 @@ struct x_option options[] = {
     { 'm', 'm', "megabytes", 0, 	"print sizes in megabytes" },
     { 'h', 'h', "human-readable", 0,	"print sizes in a more human readable form\n"
 					"(eg: 12K, 34M, 5.6G)" },
+    { 'h', 'H', 0, 0, 0 },
     { 'i', 'i', "inodes", 0,		"print inode usage, not space usage" },
     { 'l', 'l', "local", 0,		"show local filesystems only" },
     { 'T', 'T', "print-type", 0,	"print the type of each filesystem" },

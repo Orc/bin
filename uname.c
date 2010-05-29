@@ -40,6 +40,7 @@
 #include <string.h>
 #include <sys/utsname.h>
 #include <unistd.h>
+#include <stdlib.h>
 
 #define SHOW_OS		0x01
 #define SHOW_NAME	0x02
