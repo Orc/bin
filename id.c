@@ -41,6 +41,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <basis/options.h>
+#include <libgen.h>
 
 /*
  * options to the program

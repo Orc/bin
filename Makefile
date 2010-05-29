@@ -1,7 +1,7 @@
 CFLAGS = -Ilibc -I.
 
 
-PROGS=date who cat id df uname ls
+PROGS=date who cat id uname ls df
 
 
 all: $(PROGS)

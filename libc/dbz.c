@@ -76,9 +76,11 @@ Just make news with the DBM option and link with dbz.o.
 #include <string.h>
 #include <ctype.h>
 
+#if 0
 extern long lseek();
 extern char *malloc();
 extern void free();
+#endif
 
 static long get_ptr();
 static void lcase();
