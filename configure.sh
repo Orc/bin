@@ -51,6 +51,15 @@ else
     AC_EXTERN 'char *basename(const char *)'
 fi
 
+if AC_CHECK_FIELD utmp ut_user sys/types.h utmp.h; then
+    AC_SUB 'UTMP' 'libc/utmp.o'
+    AC_SUB 'WHO'  'who'
+else
+    AC_SUB 'UTMP' ''
+    AC_SUB 'WHO'  ''
+fi
+
+
 AC_CHECK_HEADERS sys/types.h pwd.h && AC_CHECK_FUNCS getpwuid
 
 if AC_CHECK_FUNCS 'bzero((char*)0,0)'; then

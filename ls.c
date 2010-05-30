@@ -36,8 +36,8 @@
 #include "config.h"
 
 #include <stdio.h>
-#include <grp.h>
 #include <pwd.h>
+#include <grp.h>
 #include <sys/ioctl.h>
 #include <sys/types.h>
 #include <sys/stat.h>
