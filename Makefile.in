@@ -8,19 +8,19 @@ PROGS=date @WHO@ cat id uname ls @DF@
 all: $(PROGS)
 
 date:  date.o $(BABYLIBC) config.h
-	$(CC) -o $* $*.o $(BABYLIBC)
+	$(CC) -o date date.o $(BABYLIBC)
 ls:    ls.o  $(BABYLIBC) config.h
-	$(CC) -o $* $*.o $(BABYLIBC)
+	$(CC) -o ls ls.o $(BABYLIBC)
 who:   who.o $(BABYLIBC) config.h
-	$(CC) -o $* $*.o $(BABYLIBC)
+	$(CC) -o who who.o $(BABYLIBC)
 cat:   cat.o $(BABYLIBC) config.h
-	$(CC) -o $* $*.o $(BABYLIBC)
+	$(CC) -o cat cat.o $(BABYLIBC)
 id:    id.o $(BABYLIBC) config.h
-	$(CC) -o $* $*.o $(BABYLIBC)
+	$(CC) -o id id.o $(BABYLIBC)
 df:    df.o $(BABYLIBC) config.h
-	$(CC) -o $* $*.o $(BABYLIBC)
+	$(CC) -o df df.o $(BABYLIBC)
 uname: uname.o $(BABYLIBC) config.h
-	$(CC) -o $* $*.o $(BABYLIBC)
+	$(CC) -o uname uname.o $(BABYLIBC)
 
 $(BABYLIBC): libc/strftime.o basis/options.o @UTMP@ libc/dbz.o @BASENAME@
 	$(AR) crv $(BABYLIBC) $?

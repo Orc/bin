@@ -44,7 +44,6 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include "basis/options.h"
-#include <libgen.h>
 
 /*
  * options to the program
