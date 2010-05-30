@@ -35,11 +35,14 @@
 /*
  * id: what you'd expect
  */
+#include "config.h"
+
 #include <stdio.h>
 #include <pwd.h>
 #include <grp.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include <stdlib.h>
 #include <basis/options.h>
 
 /*

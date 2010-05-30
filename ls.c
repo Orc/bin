@@ -33,6 +33,8 @@
  *  OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include "config.h"
+
 #include <stdio.h>
 #include <grp.h>
 #include <pwd.h>
@@ -664,13 +666,14 @@ main(int argc, char **argv)
 	dirblocks=showtarget=sizes=dates=links=owner=permissions=1;
     }
 
-    while ((opt = getopt(argc,argv,"acdfghilrstuBCFIS:1-:")) != EOF) {
+    while ((opt = getopt(argc,argv,"acdfgHhilrstuBCFIS:1-:")) != EOF) {
 	switch (opt) {
 	case 'l':   columns=0;
 		    dirblocks=showtarget=sizes=dates=links=owner=permissions=1;
 		    break;
 	case 'a':   all = 1;
 		    break;
+	case 'H':
 	case 'h':   fancysizes = 1;
 		    break;
 	case 't':   sortorder = BYTIME;

@@ -35,6 +35,8 @@
 /*
  * Uname: get system information
  */
+#include "config.h"
+
 #include <stdio.h>
 #include <basis/options.h>
 #include <string.h>

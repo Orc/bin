@@ -5,6 +5,7 @@
  *        date [CC]YYMMDDHHMM[.SS]
  */
 
+#include "config.h"
 
 #include <stdio.h>
 #include <sys/time.h>

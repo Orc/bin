@@ -1,0 +1,23 @@
+CFLAGS = -Ilibc -I.
+BABYLIBC=babylibc.a
+AR=@AR@
+RANLIB=@RANLIB@
+
+PROGS=date who cat id uname ls @DF@
+
+all: $(PROGS)
+
+date:  date.o $(BABYLIBC)
+ls:    ls.o  $(BABYLIBC)
+who:   who.o $(BABYLIBC)
+cat:   cat.o $(BABYLIBC)
+id:    id.o $(BABYLIBC)
+df:    df.o $(BABYLIBC)
+uname: uname.o $(BABYLIBC)
+
+$(BABYLIBC): libc/strftime.o basis/options.o libc/utmp.o libc/dbz.o @BASENAME@
+	$(AR) crv $(BABYLIBC) $?
+	$(RANLIB) $(BABYLIBC)
+
+clean: 
+	rm -f $(PROGS) *.o libc/*.o basis/*.o

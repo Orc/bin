@@ -36,6 +36,8 @@
 /*
  * a little handmade df, for Mastodon
  */
+#include "config.h"
+
 #include <stdio.h>
 #include <basis/options.h>
 #include <memory.h>
@@ -109,7 +111,7 @@ print(long count, long size)
     
     total *= (long long)size;
     
-    memset(buf, 0, sizeof buf);
+    bzero(buf, sizeof buf);
 
     switch (display)  {
     case BYTES:

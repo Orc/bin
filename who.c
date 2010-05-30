@@ -1,9 +1,13 @@
+#include "config.h"
+
 #include <stdio.h>
 #include <time.h>
 #include <utmp.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <stdlib.h>
 #include <errno.h>
+#include <string.h>
 
 #include <basis/options.h>
 

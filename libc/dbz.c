@@ -72,13 +72,12 @@ Just make news with the DBM option and link with dbz.o.
 
 /* Note: let the optimizer remove any if(0) or if(1) code above */
 
+#include <stdio.h>
 #include <fcntl.h>
 #include <string.h>
 #include <ctype.h>
-
-extern long lseek();
-extern char *malloc();
-extern void free();
+#include <unistd.h>
+#include <stdlib.h>
 
 static long get_ptr();
 static void lcase();
