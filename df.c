@@ -41,7 +41,7 @@
 #include <stdio.h>
 #include <basis/options.h>
 #include <memory.h>
-#include <malloc.h>
+#include <stdlib.h>
 #include <mntent.h>
 #include <unistd.h>
 

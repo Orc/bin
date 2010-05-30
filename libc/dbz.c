@@ -76,6 +76,7 @@ Just make news with the DBM option and link with dbz.o.
 #include <fcntl.h>
 #include <string.h>
 #include <ctype.h>
+
 #include <unistd.h>
 #include <stdlib.h>
 

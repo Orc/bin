@@ -545,6 +545,7 @@ suffix(info *p)
 	    putchar('*');
 	else
 	    putchar(' ');
+	putchar(' ');
     }
 }
 
@@ -565,8 +566,8 @@ ls(pack *p)
 		max = p->index[i]->i_len;
 
 	if (!fancy)
-	    max += 2;
-	maxuf = max+1;
+	    max += 3;
+	maxuf = max;
 	if (inodes)
 	    max += 8;
 	if (blocks)
