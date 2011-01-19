@@ -573,7 +573,7 @@ ls(pack *p)
 	if (blocks)
 	    max += 6;
 	if (fancy)
-	    max += 2;
+	    max += 3;
 
 	cols = width/max;
 
