@@ -366,7 +366,7 @@ printuidgid(info *p)
 	    s = remember(&pass, p->i_uid, bfr);
 	}
     }
-    printf("%-8.8s", s);
+    printf("%-8.8s ", s);
 
     if ( (s = about(&group, p->i_gid)) == 0) {
 	struct group *grp = getgrgid(p->i_gid);
@@ -377,7 +377,7 @@ printuidgid(info *p)
 	    s = remember(&group, p->i_gid, bfr);
 	}
     }
-    printf("%-8.8s", s);
+    printf("%-8.8s ", s);
 }
 
 
