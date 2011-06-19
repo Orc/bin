@@ -2,6 +2,7 @@ CFLAGS += -Ilibc -I.
 BABYLIBC=babylibc.a
 AR=@AR@
 RANLIB=@RANLIB@
+CC=@CC@
 
 PROGS=date @WHO@ cat id uname ls @DF@
 

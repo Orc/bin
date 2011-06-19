@@ -575,7 +575,8 @@ ls(pack *p)
 	if (fancy)
 	    max += 2;
 
-	cols = width/max;
+	if ( (cols = width/max) < 1 )
+	    cols = 1;
 
 	if (cols == 1)
 	    depth = p->nrf;
