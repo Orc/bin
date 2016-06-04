@@ -70,7 +70,7 @@ else
     AC_FAIL "$TARGET requires bzero or memset"
 fi
 
-if AC_CHECK_FUNCS strcasecmp; then
+if AC_CHECK_FUNCS 'strcasecmp("a","b")'; then
     :
 elif AC_CHECK_FUNCS stricmp; then
     AC_DEFINE strcasecmp stricmp
@@ -78,13 +78,15 @@ else
     AC_FAIL "$TARGET requires either strcasecmp() or stricmp()"
 fi
 
-if AC_CHECK_FUNCS strncasecmp; then
+if AC_CHECK_FUNCS 'strncasecmp("a","b", 1)'; then
     :
 elif AC_CHECK_FUNCS strnicmp; then
     AC_DEFINE strncasecmp strnicmp
 else
     AC_FAIL "$TARGET requires either strncasecmp() or strnicmp()"
 fi
+
+AC_CHECK_FUNCS 'mbstowcs'
 
 if AC_CHECK_HEADERS sys/vfs.h; then
     AC_SUB 'DF' 'df'
