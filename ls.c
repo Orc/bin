@@ -498,7 +498,7 @@ printname(char *p, int len)
     if (pretty) {
 	for (i = 0; i < len; i++) {
 	    ch = p[i];
-	    if ( isprint(ch) && (ch >= ' ') )
+	    if ( (ch & 0x80) || (isprint(ch) && (ch >= ' ')) )
 		putchar(ch);
 	    else
 		putchar('?');
