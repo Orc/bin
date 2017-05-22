@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <sys/file.h>
+#include <stdlib.h>
 
 #include "utmp.h"
 #include "dbz.h"
