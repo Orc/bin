@@ -353,6 +353,26 @@ mntcmp(struct mntent* a, struct mntent* b)
 } /* mntcmp */
 
 
+static struct mntent *
+already_mounted(char *dir, struct mntent *mnt, int nrmnt)
+{
+    int i;
+    
+    for ( i=0; i < nrmnt; i++)
+	if ( strcmp(mnt[i].mnt_dir, dir) == 0 )
+	    return &mnt[i];
+
+    return 0;
+}
+
+
+static int
+better_fs(struct mntent *new, struct mntent *old)
+{
+    return (new->mnt_fsname[0] == '/') && (old->mnt_fsname[0] != '/');
+}
+
+
 /*
  * doit() loads up the mounted filesystems list and either prints out
  *        information on selected filesystems or all the filesystems
@@ -366,6 +386,7 @@ doit()
     struct mntent *mntpoints;
     int nrmnt = 0;
     int x, y, lastmatch;
+    struct mntent *mountpoint;
     
     mntpoints = malloc(1);
 
@@ -380,11 +401,19 @@ doit()
 	    exit(1);
 	}
     while (mnt = getmntent(f)) {
-	mntpoints = realloc(mntpoints, (2+nrmnt) * sizeof mntpoints[0]);
-	mntpoints[nrmnt].mnt_fsname = strdup(mnt->mnt_fsname);
-	mntpoints[nrmnt].mnt_dir    = strdup(mnt->mnt_dir);
-	mntpoints[nrmnt].mnt_type   = strdup(mnt->mnt_type);
-	nrmnt++;
+	if ( mountpoint=already_mounted(mnt->mnt_dir, mntpoints, nrmnt) ) {
+	    if ( better_fs(mnt, mountpoint) ) {
+		free(mountpoint->mnt_fsname);
+		mountpoint->mnt_fsname = strdup(mnt->mnt_fsname);
+	    }
+	}
+	else {
+	    mntpoints = realloc(mntpoints, (2+nrmnt) * sizeof mntpoints[0]);
+	    mntpoints[nrmnt].mnt_fsname = strdup(mnt->mnt_fsname);
+	    mntpoints[nrmnt].mnt_dir    = strdup(mnt->mnt_dir);
+	    mntpoints[nrmnt].mnt_type   = strdup(mnt->mnt_type);
+	    nrmnt++;
+	}
     }
     endmntent(f);
 

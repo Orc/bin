@@ -32,3 +32,6 @@ $(BABYLIBC): libc/strftime.o basis/options.o @UTMP@ libc/dbz.o @BASENAME@
 
 clean: 
 	rm -f $(PROGS) *.o libc/*.o basis/*.o
+
+spotless distclean: clean
+	@DISTCLEAN@ @GENERATED_FILES@ @CONFIGURE_FILES@

@@ -26,14 +26,18 @@ TARGET=bin
 . ./configure.inc
 
 AC_INIT $TARGET
+unset __MK_LIBRARIAN
 
 AC_PROG_CC
 
-# gcc can bite me.
-case "$AC_CC $AC_CFLAGS" in
-*-Wall*)    AC_DEFINE 'while(x)' 'while( (x) != 0 )'
-	    AC_DEFINE 'if(x)' 'if( (x) != 0 )' ;;
-esac
+# gcc (and clang) can bite me.
+if [ "$IS_BROKEN_CC" ]; then
+    case "$AC_CC $AC_CFLAGS" in
+    *-Wall*)    ;;
+    *)          AC_DEFINE 'while(x)' 'while( (x) != 0 )'
+		AC_DEFINE 'if(x)' 'if( (x) != 0 )' ;;
+    esac
+fi
 
 AC_PROG ar || AC_FAIL "$TARGET requires ar"
 AC_PROG ranlib
