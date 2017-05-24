@@ -26,7 +26,7 @@ TARGET=bin
 . ./configure.inc
 
 AC_INIT $TARGET
-unset __MK_LIBRARIAN
+unset _MK_LIBRARIAN
 
 AC_PROG_CC
 
