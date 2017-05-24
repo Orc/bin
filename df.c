@@ -16,9 +16,6 @@
  *   This product includes software developed by David Parsons
  *   (orc@pell.portland.or.us)
  *
- *  4. My name may not be used to endorse or promote products derived
- *     from this software without specific prior written permission.
- *     
  *  THIS SOFTWARE IS PROVIDED BY DAVID PARSONS ``AS IS'' AND ANY
  *  EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
  *  THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
