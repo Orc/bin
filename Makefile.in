@@ -23,7 +23,7 @@ df:    df.o $(BABYLIBC) config.h
 uname: uname.o $(BABYLIBC) config.h
 	$(CC) -o uname uname.o $(BABYLIBC)
 
-$(BABYLIBC): libc/strftime.o basis/options.o @UTMP@ libc/dbz.o @BASENAME@
+$(BABYLIBC): libc/wcwidth.o libc/strftime.o basis/options.o @UTMP@ libc/dbz.o @BASENAME@
 	$(AR) crv $(BABYLIBC) $?
 	$(RANLIB) $(BABYLIBC)
 

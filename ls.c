@@ -47,11 +47,13 @@
 #include <unistd.h>
 #include <string.h>
 #include <time.h>
+#include <locale.h>
 
 typedef struct {
     char *i_name;
     short i_valid;
     short i_len;
+    short i_dlen;
     int   i_blocks;
     struct stat i;
 #define i_ino	i.st_ino
@@ -189,8 +191,20 @@ newer(pack *p)
 info
 toinfo(struct dirent *de, info *p)
 {
+    wchar_t *expanded;
+    int res;
+    
     p->i_name = strdup(de->d_name);
     p->i_len = strlen(de->d_name);
+    p->i_dlen = p->i_len;
+
+#if HAVE_MBSTOWCS
+    if ( expanded = alloca(sizeof(wchar_t) * p->i_len) )
+	if ( mbstowcs(expanded, de->d_name, p->i_len) > 0 )
+	    if ( (res = mk_wcswidth(expanded, p->i_len)) > 0 )
+		p->i_dlen = res;
+#endif
+
 #if defined(DTTOIF)
     p->i_mode = DTTOIF(de->d_type);
 #endif
@@ -227,6 +241,12 @@ more(char *f, struct stat *fi, pack *p)
     expand(p);
     p->files[p->nrf].i_name = strdup(f);
     p->files[p->nrf].i_len = strlen(f);
+    p->files[p->nrf].i_dlen = mbstowcs(0, f, 0);
+    
+if (p->files[p->nrf].i_len != p->files[p->nrf].i_dlen)
+    fprintf(stderr, "%s: len=%d, display len=%d\n", f,
+     p->files[p->nrf].i_len, p->files[p->nrf].i_dlen);
+    
     p->files[p->nrf].i_valid = 1;
     p->files[p->nrf].i_blocks = (fi->st_size+511)/512;
     p->files[p->nrf].i = *fi;
@@ -483,7 +503,7 @@ printname(char *p, int len)
     if (pretty) {
 	for (i = 0; i < len; i++) {
 	    ch = p[i];
-	    if ( isprint(ch) && (ch >= ' ') )
+	    if ( (ch & 0x80) || (isprint(ch) && (ch >= ' ')) )
 		putchar(ch);
 	    else
 		putchar('?');
@@ -567,7 +587,7 @@ ls(pack *p)
 	/* calculate how many rows, then correct for runty last row
 	 */
 	for (i=0; i<p->nrf; i++)
-	    if ( p->index[i]->i_len > max )
+	    if ( p->index[i]->i_dlen > max )
 		max = p->index[i]->i_len;
 
 	if (!fancy)
@@ -605,7 +625,7 @@ ls(pack *p)
 		    printit(p->index[idx]);
 		    suffix(p->index[idx]);
 		    if ( i < cols-1 && idx+depth < p->nrf) {
-			printf("%*s", maxuf-(p->index[idx]->i_len), "");
+			printf("%*s", maxuf-(p->index[idx]->i_dlen), "");
 			continue;
 		    }
 		}
@@ -655,8 +675,11 @@ main(int argc, char **argv)
     int i;
     pack files, dirs;
     struct stat st;
+    char * locale = getenv("LANG");
 
     opterr = 0;
+
+    setlocale(LC_ALL, locale);
 
     columns = isatty(1);
     pgm = basename(argv[0]);
