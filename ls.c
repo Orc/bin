@@ -76,6 +76,11 @@ typedef struct {
 
 
 char *pgm = "ls";
+
+#undef ATIME
+#undef CTIME
+#undef MTIME
+
 int columns;		/* display in columns */
 int all = 0;		/* show all files except . and .. */
 int follow = 0;		/* follow links */
