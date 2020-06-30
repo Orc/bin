@@ -80,7 +80,7 @@ int columns;		/* display in columns */
 int all = 0;		/* show all files except . and .. */
 int follow = 0;		/* follow links */
 enum {NOT,BYNAME,BYTIME,BYSIZE,BYLEN} sortorder = BYNAME;
-enum {ATIME,CTIME,MTIME} whichtime = MTIME;
+enum {T_ATIME,T_CTIME,T_MTIME} whichtime = T_MTIME;
 int inodes = 0;		/* print inodes */
 int links = 0;		/* print # links */
 int directories = 1;	/* print contents of directories */
@@ -253,9 +253,9 @@ time_t
 date(info *p)
 {
     switch (whichtime) {
-    case ATIME: return p->i_atime;
-    case CTIME: return p->i_ctime;
-    default:    return p->i_mtime;
+    case T_ATIME: return p->i_atime;
+    case T_CTIME: return p->i_ctime;
+    default:      return p->i_mtime;
     }
 }
 
@@ -709,11 +709,11 @@ main(int argc, char **argv)
 		    break;
 	case 'f':   sortorder = NOT;
 		    break;
-	case 'c':   whichtime = CTIME;
+	case 'c':   whichtime = T_CTIME;
 		    break;
 	case 'd':   directories = 0;
 		    break;
-	case 'u':   whichtime = ATIME;
+	case 'u':   whichtime = T_ATIME;
 		    break;
 	case 'g':   break;
 	case 'B':   pretty = 1;
