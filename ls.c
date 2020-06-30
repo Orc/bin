@@ -46,7 +46,6 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <string.h>
-#include <time.h>
 #include <locale.h>
 
 typedef struct {

@@ -8,7 +8,6 @@
 #include "config.h"
 
 #include <stdio.h>
-#include <sys/time.h>
 #include <ctype.h>
 #include <stdlib.h>
 #include <unistd.h>
