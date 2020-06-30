@@ -46,6 +46,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <string.h>
+#include <time.h>
 #include <locale.h>
 
 typedef struct {
@@ -79,7 +80,7 @@ int columns;		/* display in columns */
 int all = 0;		/* show all files except . and .. */
 int follow = 0;		/* follow links */
 enum {NOT,BYNAME,BYTIME,BYSIZE,BYLEN} sortorder = BYNAME;
-enum {T_ATIME,T_CTIME,T_MTIME} whichtime = T_MTIME;
+enum {ATIME,CTIME,MTIME} whichtime = MTIME;
 int inodes = 0;		/* print inodes */
 int links = 0;		/* print # links */
 int directories = 1;	/* print contents of directories */
@@ -238,8 +239,9 @@ more(char *f, struct stat *fi, pack *p)
     p->files[p->nrf].i_dlen = mbstowcs(0, f, 0);
     
 if (p->files[p->nrf].i_len != p->files[p->nrf].i_dlen)
-    fprintf(stderr, "%s: len=%d, display len=%d\n", f,
-     p->files[p->nrf].i_len, p->files[p->nrf].i_dlen);
+    /*fprintf(stderr, "%s: len=%d, display len=%d\n", f,
+     *p->files[p->nrf].i_len, p->files[p->nrf].i_dlen);
+     */
     
     p->files[p->nrf].i_valid = 1;
     p->files[p->nrf].i_blocks = (fi->st_size+511)/512;
@@ -252,9 +254,9 @@ time_t
 date(info *p)
 {
     switch (whichtime) {
-    case T_ATIME: return p->i_atime;
-    case T_CTIME: return p->i_ctime;
-    default:      return p->i_mtime;
+    case ATIME: return p->i_atime;
+    case CTIME: return p->i_ctime;
+    default:    return p->i_mtime;
     }
 }
 
@@ -708,11 +710,11 @@ main(int argc, char **argv)
 		    break;
 	case 'f':   sortorder = NOT;
 		    break;
-	case 'c':   whichtime = T_CTIME;
+	case 'c':   whichtime = CTIME;
 		    break;
 	case 'd':   directories = 0;
 		    break;
-	case 'u':   whichtime = T_ATIME;
+	case 'u':   whichtime = ATIME;
 		    break;
 	case 'g':   break;
 	case 'B':   pretty = 1;
@@ -743,7 +745,7 @@ main(int argc, char **argv)
 		    break;
 	case '-':   /*silently kill gnu-style long options */
 		    break;
-	default:    usage(1);
+	default:    usage();
 	}
     }
 

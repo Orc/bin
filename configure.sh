@@ -42,13 +42,6 @@ AC_C_VOLATILE
 AC_C_CONST
 AC_SCALAR_TYPES sub
 
-if AC_CHECK_STRUCT tm time.h sys/time.h; then
-    AC_CHECK_HEADERS time.h && AC_INCLUDE time.h
-    AC_CHECK_HEADERS sys/time.h && AC_INCLUDE sys/time.h
-else
-    AC_FAIL "$TARGET needs struct tm"
-fi
-
 if AC_CHECK_BASENAME; then
     AC_SUB 'BASENAME' ''
     AC_CHECK_HEADERS libgen.h && AC_INCLUDE libgen.h
